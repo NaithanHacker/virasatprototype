@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Art</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --almond: #f2e4c9;
+            --almond-deep: #e9d6ab;
+            --card: #f8ecd4;
+            --maroon: #7a1f2b;
+            --maroon-deep: #5c141d;
+            --gold: #b8862c;
+            --gold-bright: #d8a94a;
+            --ink: #4a2e1c;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 16px;
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--ink);
+            background-color: var(--almond);
+            background-image:
+                radial-gradient(circle at 12% 15%, rgba(122,31,43,0.05) 0, transparent 40%),
+                radial-gradient(circle at 88% 85%, rgba(184,134,44,0.08) 0, transparent 45%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* petals drifting down continuously in the background, behind the card */
+        .petal {
+            position: fixed;
+            top: -30px;
+            width: 13px;
+            height: 13px;
+            background: var(--maroon);
+            border-radius: 0 60% 0 60%;
+            opacity: 0;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .petal.gold { background: var(--gold-bright); }
+        .p1 { left: 6%;  width: 11px; height: 11px; animation-duration: 13s; animation-delay: 0s; }
+        .p2 { left: 17%; width: 15px; height: 15px; animation-duration: 16s; animation-delay: 2.5s; }
+        .p3 { left: 30%; width: 10px; height: 10px; animation-duration: 11s; animation-delay: 5s; }
+        .p4 { left: 46%; width: 14px; height: 14px; animation-duration: 15s; animation-delay: 1s; }
+        .p5 { left: 60%; width: 12px; height: 12px; animation-duration: 12s; animation-delay: 7s; }
+        .p6 { left: 73%; width: 16px; height: 16px; animation-duration: 17s; animation-delay: 3.5s; }
+        .p7 { left: 85%; width: 11px; height: 11px; animation-duration: 14s; animation-delay: 6s; }
+        .p8 { left: 94%; width: 13px; height: 13px; animation-duration: 12.5s; animation-delay: 4.2s; }
+
+        @keyframes fall {
+            0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
+            8%   { opacity: 0.55; }
+            92%  { opacity: 0.4; }
+            100% { opacity: 0; transform: translateY(100vh) rotate(280deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .petal { display: none; }
+        }
+
+        .con {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            padding: 50px 40px 40px;
+            background: var(--card);
+            border-radius: 2px;
+            box-shadow: 0 25px 55px rgba(90,55,20,0.18);
+        }
+
+        /* ornate double frame, gold outer / maroon inner, drawn in on load */
+        .frame-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .frame-svg rect { fill: none; }
+        .frame-svg .outer {
+            stroke: var(--gold);
+            stroke-width: 2;
+            stroke-dasharray: 1700;
+            stroke-dashoffset: 1700;
+            animation: draw-frame 2.2s cubic-bezier(.4,0,.2,1) forwards;
+        }
+        .frame-svg .inner {
+            stroke: var(--maroon);
+            stroke-width: 1;
+            stroke-dasharray: 1550;
+            stroke-dashoffset: 1550;
+            animation: draw-frame 2.2s cubic-bezier(.4,0,.2,1) 0.25s forwards;
+        }
+        @keyframes draw-frame {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* corner motifs bloom in after the frame finishes */
+        .corner {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: bloom 0.7s ease-out 2.1s forwards;
+        }
+        .corner.tl { top: 12px; left: 12px; }
+        .corner.tr { top: 12px; right: 12px; transform: scale(0.5) scaleX(-1); }
+        .corner.bl { bottom: 12px; left: 12px; transform: scale(0.5) scaleY(-1); }
+        .corner.br { bottom: 12px; right: 12px; transform: scale(0.5) scale(-1); }
+        @keyframes bloom {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .heading-wrap {
+            position: relative;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .motif-top {
+            width: 54px;
+            height: 40px;
+            margin: 0 auto 12px;
+            opacity: 0;
+            animation: fade-in 0.8s ease-out 1.9s forwards;
+        }
+
+        h1 {
+            font-family: 'Yatra One', cursive;
+            font-weight: 400;
+            font-size: 2.1rem;
+            margin: 0;
+            letter-spacing: 0.5px;
+            color: var(--maroon-deep);
+            opacity: 0;
+            animation: fade-in 0.9s ease-out 0.3s forwards;
+        }
+
+        .sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: rgba(74,46,28,0.65);
+            margin: 10px 0 26px;
+            font-weight: 500;
+            opacity: 0;
+            animation: fade-in 0.9s ease-out 0.5s forwards;
+        }
+
+        .motif-divider {
+            width: 130px;
+            height: 16px;
+            margin: 0 auto 30px;
+            opacity: 0;
+            animation: fade-in 0.9s ease-out 0.7s forwards;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .field {
+            position: relative;
+            opacity: 0;
+            animation: fade-in 0.7s ease-out forwards;
+        }
+        .field:nth-of-type(1) { animation-delay: 0.9s; }
+        .field:nth-of-type(2) { animation-delay: 1.05s; }
+        .field:nth-of-type(3) { animation-delay: 1.2s; }
+        .field:nth-of-type(4) { animation-delay: 1.35s; }
+
+        label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            color: var(--gold);
+            margin-bottom: 7px;
+            text-transform: capitalize;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(122,31,43,0.2);
+            color: var(--ink);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 500;
+            padding: 7px 4px 9px;
+            outline: none;
+            transition: border-color 0.35s ease;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 78px;
+            border: 1.5px solid rgba(122,31,43,0.2);
+            border-radius: 3px;
+            padding: 12px;
+            line-height: 1.5;
+        }
+
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: rgba(74,46,28,0.35);
+            font-weight: 500;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--maroon);
+        }
+
+        .file-field {
+            border: 1.5px dashed rgba(184,134,44,0.55);
+            border-radius: 4px;
+            padding: 17px;
+            text-align: center;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+        .file-field:hover {
+            border-color: var(--maroon);
+            background: rgba(122,31,43,0.04);
+        }
+        .file-field label { margin-bottom: 10px; }
+        input[type="file"] {
+            width: 100%;
+            color: rgba(74,46,28,0.65);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+        }
+        input[type="file"]::file-selector-button {
+            background: var(--maroon);
+            color: var(--almond);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 3px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            margin-right: 12px;
+            transition: background 0.25s ease;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background: var(--maroon-deep);
+        }
+
+        /* submit styled like a gold-edged seal on an invitation */
+        button[type="submit"] {
+            position: relative;
+            margin-top: 8px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 3px;
+            background: linear-gradient(135deg, var(--maroon), var(--maroon-deep));
+            color: var(--almond);
+            font-family: 'Yatra One', cursive;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            opacity: 0;
+            animation: fade-in 0.7s ease-out 1.5s forwards;
+        }
+        button[type="submit"]::after {
+            content: "";
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(216,169,74,0.6);
+            border-radius: 2px;
+            pointer-events: none;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(122,31,43,0.3);
+        }
+        button[type="submit"]:active { transform: translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .con { padding: 42px 24px 32px; }
+            h1 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="petal p1"></div>
+    <div class="petal p2 gold"></div>
+    <div class="petal p3"></div>
+    <div class="petal p4 gold"></div>
+    <div class="petal p5"></div>
+    <div class="petal p6 gold"></div>
+    <div class="petal p7"></div>
+    <div class="petal p8 gold"></div>
+
+    <div class="con">
+        <svg class="frame-svg" viewBox="0 0 480 640" preserveAspectRatio="none">
+            <rect class="outer" x="6" y="6" width="468" height="628" rx="2"/>
+            <rect class="inner" x="13" y="13" width="454" height="614" rx="2"/>
+        </svg>
+
+        <svg class="corner tl" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4c10 0 16 6 16 16M4 4c0 10 6 16 16 16" stroke="#b8862c" stroke-width="1.5" fill="none"/>
+            <circle cx="4" cy="4" r="3" fill="#7a1f2b"/>
+        </svg>
+        <svg class="corner tr" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4c10 0 16 6 16 16M4 4c0 10 6 16 16 16" stroke="#b8862c" stroke-width="1.5" fill="none"/>
+            <circle cx="4" cy="4" r="3" fill="#7a1f2b"/>
+        </svg>
+        <svg class="corner bl" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4c10 0 16 6 16 16M4 4c0 10 6 16 16 16" stroke="#b8862c" stroke-width="1.5" fill="none"/>
+            <circle cx="4" cy="4" r="3" fill="#7a1f2b"/>
+        </svg>
+        <svg class="corner br" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4c10 0 16 6 16 16M4 4c0 10 6 16 16 16" stroke="#b8862c" stroke-width="1.5" fill="none"/>
+            <circle cx="4" cy="4" r="3" fill="#7a1f2b"/>
+        </svg>
+
+        <div class="heading-wrap">
+            <svg class="motif-top" viewBox="0 0 54 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M27 4c-8 0-13 6-13 13 0 5 3 8 6 10-4 2-8 6-8 11h30c0-5-4-9-8-11 3-2 6-5 6-10 0-7-5-13-13-13z" fill="none" stroke="#7a1f2b" stroke-width="1.4"/>
+                <circle cx="27" cy="17" r="3" fill="#b8862c"/>
+            </svg>
+            <h1>Share Your Art</h1>
+            <p class="sub">Every piece carries a story — tell us yours</p>
+            <svg class="motif-divider" viewBox="0 0 130 16" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="8" x2="48" y2="8" stroke="#7a1f2b" stroke-opacity="0.35" stroke-width="1.5"/>
+                <circle cx="65" cy="8" r="4.5" fill="none" stroke="#b8862c" stroke-width="1.5"/>
+                <circle cx="65" cy="8" r="1.6" fill="#7a1f2b"/>
+                <line x1="82" y1="8" x2="130" y2="8" stroke="#7a1f2b" stroke-opacity="0.35" stroke-width="1.5"/>
+            </svg>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="field">
+                <label for="name_art">Artist's name</label>
+                <input type="text" name="name_artist" id="name_art" placeholder="Who made this piece?" required>
+            </div>
+
+            <div class="field">
+                <label for="title_art">Title of the art</label>
+                <input type="text" name="name_art" id="title_art" placeholder="Give your art a name" required>
+            </div>
+
+            <div class="field">
+                <label for="desc_art">Description</label>
+                <textarea name="desc_art" id="desc_art" placeholder="What inspired this work? Which tradition or technique does it draw from?"></textarea>
+            </div>
+
+            <div class="field file-field">
+                <label for="image_art">Upload artwork</label>
+                <input type="file" name="image_art" id="image_art">
+            </div>
+
+            <button type="submit">Submit Your Art</button>
+        </form>
+    </div>
+</body>
+</html>

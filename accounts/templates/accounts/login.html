@@ -1,0 +1,949 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Virasat | Our Heritage, Your Story</title>
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4ead8;
+            color: #3d2415;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+
+        /* =========================
+           MAIN LOGIN PAGE
+        ========================== */
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        /* =========================
+           LEFT HERITAGE IMAGE
+        ========================== */
+
+        .heritage-section {
+            width: 55%;
+            min-height: 100vh;
+
+            position: relative;
+            overflow: hidden;
+
+            /* Your collage image */
+            background-image: url("heritage-collage.png");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Slight warm overlay to match Virasat theme */
+        .heritage-section::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background: rgba(72, 42, 22, 0.08);
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           LOGIN SECTION
+        ========================== */
+
+        .login-section {
+            width: 45%;
+            min-height: 100vh;
+
+            background: #f9f1e4;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 40px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+
+        /* =========================
+           LOGO
+        ========================== */
+
+        .logo {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .logo h1 {
+            font-size: 54px;
+            letter-spacing: 5px;
+
+            color: #6e3d20;
+            font-weight: bold;
+        }
+
+        .logo p {
+            font-size: 15px;
+            letter-spacing: 2px;
+
+            margin-top: 6px;
+
+            color: #856548;
+        }
+
+
+        /* =========================
+           WELCOME
+        ========================== */
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h2 {
+            font-size: 32px;
+
+            color: #442817;
+
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #806750;
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           INPUTS
+        ========================== */
+
+        .input-group {
+            margin-bottom: 22px;
+        }
+
+        .input-group label {
+            display: block;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #57341f;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box > span:first-child {
+            position: absolute;
+
+            left: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 17px;
+
+            color: #99765a;
+
+            z-index: 2;
+        }
+
+        .input-box input {
+            width: 100%;
+
+            padding: 15px 45px 15px 45px;
+
+            border: 1px solid #d6c1a5;
+            border-radius: 8px;
+
+            background: #fffaf3;
+            color: #3d2415;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: #87512c;
+
+            box-shadow:
+                0 0 0 3px rgba(135, 81, 44, 0.12);
+        }
+
+
+        /* =========================
+           PASSWORD EYE
+        ========================== */
+
+        .password-toggle {
+            position: absolute;
+
+            right: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            cursor: pointer;
+
+            color: #89684e;
+
+            font-size: 14px;
+
+            z-index: 3;
+        }
+
+
+        /* =========================
+           LOGIN BUTTON
+        ========================== */
+
+        .login-btn {
+            width: 100%;
+
+            border: none;
+            border-radius: 8px;
+
+            padding: 15px;
+
+            background: #71411f;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #532d17;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================
+           FORGOT PASSWORD
+        ========================== */
+
+        .forgot {
+            text-align: right;
+
+            margin-top: 13px;
+        }
+
+        .forgot a {
+            color: #774726;
+
+            font-size: 14px;
+
+            text-decoration: none;
+        }
+
+        .forgot a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           SIGNUP
+        ========================== */
+
+        .signup {
+            text-align: center;
+
+            margin-top: 35px;
+
+            color: #806750;
+
+            font-size: 14px;
+        }
+
+        .signup a {
+            color: #6e3d20;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            cursor: pointer;
+        }
+
+        .signup a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           PORTAL MODAL
+        ========================== */
+
+        .portal-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(38, 22, 12, 0.65);
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 1000;
+        }
+
+        .portal-overlay.active {
+            display: flex;
+        }
+
+        .portal-box {
+            width: 100%;
+            max-width: 950px;
+
+            background: #faf3e7;
+
+            border-radius: 18px;
+
+            padding: 40px;
+
+            position: relative;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =========================
+           CLOSE BUTTON
+        ========================== */
+
+        .close-btn {
+            position: absolute;
+
+            top: 18px;
+            right: 22px;
+
+            width: 35px;
+            height: 35px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: #ead8c0;
+            color: #54321e;
+
+            font-size: 20px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           PORTAL TITLE
+        ========================== */
+
+        .portal-title {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .portal-title h2 {
+            font-size: 30px;
+
+            color: #4a2b19;
+        }
+
+        .portal-title p {
+            margin-top: 8px;
+
+            color: #806750;
+        }
+
+
+        /* =========================
+           PORTAL GRID
+        ========================== */
+
+        .portal-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        /* =========================
+           PORTAL CARD
+        ========================== */
+
+        .portal-card {
+            background: #fffaf3;
+
+            border: 1px solid #ddc8aa;
+
+            border-radius: 14px;
+
+            padding: 30px 22px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-7px);
+
+            border-color: #8b5631;
+
+            box-shadow:
+                0 10px 25px rgba(89, 49, 23, 0.12);
+        }
+
+
+        /* =========================
+           PORTAL ICON
+        ========================== */
+
+        .portal-icon {
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #ead5b9;
+
+            font-size: 30px;
+        }
+
+        .portal-card h3 {
+            color: #4d2b18;
+
+            font-size: 19px;
+
+            margin-bottom: 10px;
+        }
+
+        .portal-card p {
+            color: #806750;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 900px) {
+
+            .page {
+                flex-direction: column;
+            }
+
+            .heritage-section {
+                width: 100%;
+                min-height: 45vh;
+
+                background-position: center;
+            }
+
+            .login-section {
+                width: 100%;
+                min-height: 55vh;
+            }
+
+            .portal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 500px) {
+
+            .heritage-section {
+                min-height: 32vh;
+            }
+
+            .login-section {
+                padding: 25px;
+            }
+
+            .logo h1 {
+                font-size: 42px;
+            }
+
+            .welcome h2 {
+                font-size: 27px;
+            }
+
+            .portal-box {
+                padding: 30px 20px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         LOGIN PAGE
+    ========================== -->
+
+    <div class="page">
+
+
+        <!-- =========================
+             HERITAGE COLLAGE
+        ========================== -->
+
+        <section class="heritage-section">
+            <img src="{% static 'images/heritage-collage.png' %}" alt="Heritage Collage" style="width: 100%; height: 100%; object-fit: cover;">
+
+        </section>
+
+
+        <!-- =========================
+             LOGIN
+        ========================== -->
+
+        <section class="login-section">
+
+            <div class="login-container">
+
+
+                <!-- LOGO -->
+
+                <div class="logo">
+
+                    <h1>VIRASAT</h1>
+
+                    <p>
+                        Our Heritage . Your Story
+                    </p>
+
+                </div>
+
+
+                <!-- WELCOME -->
+
+                <div class="welcome">
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <p>
+                        Log in to continue your journey with Virasat.
+                    </p>
+
+                </div>
+
+                {% if error %}
+                <p>{{ error }}</p>
+                {% endif %}
+
+                <!-- LOGIN FORM -->
+
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+
+                    <!-- EMAIL -->
+
+                    <div class="input-group">
+
+                        <label for="email">
+                            Enter Email
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>✉</span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="input-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>🔒</span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+
+                            <span
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                            >
+                                👁
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOGIN -->
+
+                    <button
+                        class="login-btn"
+                        type="submit"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+
+                <!-- FORGOT PASSWORD -->
+
+                <div class="forgot">
+
+                    <button
+                        href="#"
+                        onclick="forgotPassword()"
+                    >
+                        Forgot Password?
+                    </a>
+
+                </div>
+
+
+                <!-- SIGN UP -->
+
+                <div class="signup">
+
+                    Don't have an account?
+
+                    <a href='/register/'>
+                        Sign Up
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =========================
+         PORTAL SELECTION
+    ========================== -->
+
+    <div
+        class="portal-overlay"
+        id="portalOverlay"
+    >
+
+        <div class="portal-box">
+
+
+            <!-- CLOSE -->
+
+            <button
+                class="close-btn"
+                onclick="closePortals()"
+            >
+                ×
+            </button>
+
+
+            <!-- TITLE -->
+
+            <div class="portal-title">
+
+                <h2>
+                    Choose Your Portal
+                </h2>
+
+                <p>
+                    Select the portal that best describes
+                    your journey with Virasat.
+                </p>
+
+            </div>
+
+
+            <!-- PORTAL GRID -->
+
+            <div class="portal-grid">
+
+
+                <!-- =========================
+                     ARTIST
+                ========================== -->
+
+                <div
+                    class="portal-card"
+                    onclick="selectPortal('Artist / Seller / Teacher')"
+                >
+
+                    <div class="portal-icon">
+                        🎨
+                    </div>
+
+                    <h3>
+                        Artist / Seller / Teacher
+                    </h3>
+
+                    <p>
+                        Showcase your traditional art,
+                        sell your products, teach your art
+                        form and apply for recognition.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =========================
+                     CONSUMER
+                ========================== -->
+
+                <div
+                    class="portal-card"
+                    onclick="selectPortal('Consumer / Explorer')"
+                >
+
+                    <div class="portal-icon">
+                        🛍️
+                    </div>
+
+                    <h3>
+                        Consumer / Explorer
+                    </h3>
+
+                    <p>
+                        Discover heritage arts, explore
+                        traditional products, purchase
+                        artworks and learn different art forms.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =========================
+                     GOVERNMENT
+                ========================== -->
+
+                <div
+                    class="portal-card"
+                    onclick="selectPortal('Government / Certifying Body')"
+                >
+
+                    <div class="portal-icon">
+                        🏛️
+                    </div>
+
+                    <h3>
+                        Government / Certifying Body
+                    </h3>
+
+                    <p>
+                        Review applications, verify traditional
+                        art forms and provide official recognition
+                        and certification.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        /* =========================
+           PASSWORD VISIBILITY
+        ========================== */
+
+        function togglePassword() {
+
+            const password =
+                document.getElementById("password");
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+            } else {
+
+                password.type = "password";
+
+            }
+
+        }
+
+
+        /* =========================
+           FORGOT PASSWORD
+        ========================== */
+
+        function forgotPassword() {
+
+            alert(
+                "Password recovery will be available here."
+            );
+
+        }
+
+
+        /* =========================
+           OPEN PORTALS
+        ========================== */
+
+        function openPortals() {
+
+            document
+                .getElementById("portalOverlay")
+                .classList
+                .add("active");
+
+        }
+
+
+        /* =========================
+           CLOSE PORTALS
+        ========================== */
+
+        function closePortals() {
+
+            document
+                .getElementById("portalOverlay")
+                .classList
+                .remove("active");
+
+        }
+
+
+        /* =========================
+           PORTAL SELECTION -> REGISTER
+        ========================== */
+
+        function selectPortal(portal) {
+
+            window.location.href = "{% url 'register' %}";
+
+        }
+
+        document
+            .getElementById("portalOverlay")
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (event.target === this) {
+
+                        closePortals();
+
+                    }
+
+                }
+            );
+
+    </script>
+
+</body>
+</html>

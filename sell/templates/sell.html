@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell</title>
+</head>
+<body>
+    <div>
+        <h2>All the Items are listed below.</h2>
+        {% for item in items %}
+            <div>
+                <p>{{ item.name_of_art }}</p>
+                <p>{{ item.name_of_artist }}</p>
+                <p>{{ item.price_of_art }}</p>
+                <p>{{ item.desc_of_art }}</p>
+                {% if item.image_of_art %}
+                    <img src="{{ item.image_of_art.url }}" alt="{{ item.name_of_art }}">
+                {% else %}
+                    <span>No image</span>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No art added yet.</p>
+        {% endfor %}
+
+        <a href="/artsell/">+Add Item To sell</a>
+
+    </div>
+</body>
+</html>

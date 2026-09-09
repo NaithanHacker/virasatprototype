@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Virasat &mdash; Create your account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:      #F1E6D2;
+    --paper:      #E9DCC1;
+    --terracotta: #B15E2E;
+    --maroon:     #7A2333;
+    --ink:        #3B2416;
+    --gold:       #D6A23B;
+    --navy:       #24405F;
+    --forest:     #375A3B;
+    --line:       rgba(59,36,22,0.16);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+
+  body{
+    font-family:'Work Sans', sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    display:grid;
+    grid-template-columns:minmax(320px,42%) 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- LEFT PANEL ---------- */
+  .panel-story{
+    position:relative;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(214,162,59,0.18), transparent 45%),
+      linear-gradient(165deg, var(--maroon) 0%, #5c1c28 55%, var(--ink) 130%);
+    color:var(--cream);
+    padding:56px 48px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    overflow:hidden;
+  }
+
+  .paper-texture{
+    position:absolute;
+    inset:0;
+    opacity:0.08;
+    background-image:
+      repeating-linear-gradient(90deg, #fff 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 26px);
+    pointer-events:none;
+  }
+
+  .story-top{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    position:relative;
+    z-index:1;
+  }
+  .mark{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:26px;
+    letter-spacing:0.02em;
+  }
+  .mark-sub{
+    font-size:15px;
+    color:var(--gold);
+    opacity:0.9;
+  }
+
+  .motif{
+    align-self:center;
+    width:120px;
+    margin:8px 0;
+    opacity:0.85;
+    position:relative;
+    z-index:1;
+  }
+  .motif svg{width:100%;height:auto;}
+  .motif svg g{stroke:var(--gold);}
+
+  .story-quote{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(26px, 3vw, 34px);
+    line-height:1.35;
+    margin:0;
+    position:relative;
+    z-index:1;
+  }
+
+  .story-line{
+    margin:22px 0 0;
+    font-size:15px;
+    letter-spacing:0.03em;
+    color:var(--gold);
+    position:relative;
+    z-index:1;
+  }
+
+  .story-bottom{
+    position:relative;
+    z-index:1;
+    border-top:1px solid rgba(241,230,210,0.25);
+    padding-top:22px;
+  }
+  .story-note{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:16px;
+    line-height:1.5;
+    margin:0 0 18px;
+    color:rgba(241,230,210,0.85);
+  }
+  .swatches{display:flex;gap:8px;}
+  .swatches span{width:16px;height:16px;border-radius:50%;display:inline-block;box-shadow:0 0 0 1px rgba(241,230,210,0.4);}
+
+  /* ---------- RIGHT PANEL ---------- */
+  .panel-form{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:48px 32px;
+    background:var(--cream);
+  }
+
+  .form-card{
+    width:100%;
+    max-width:460px;
+  }
+
+  .form-head h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:32px;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .form-head p{
+    margin:0 0 32px;
+    color:rgba(59,36,22,0.65);
+    font-size:15px;
+  }
+
+  fieldset.role-field{
+    border:none;
+    padding:0;
+    margin:0 0 26px;
+  }
+  fieldset.role-field legend{
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    padding:0 0 10px;
+    width:100%;
+  }
+
+  .role-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:10px;
+  }
+
+  .role-card{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:6px;
+    padding:14px 12px;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    cursor:pointer;
+    background:#fff;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .role-card input{
+    position:absolute;
+    opacity:0;
+    width:1px;height:1px;
+  }
+  .role-icon{
+    color:var(--terracotta);
+    width:26px;height:26px;
+  }
+  .role-icon svg{width:100%;height:100%;}
+  .role-name{
+    font-weight:600;
+    font-size:14px;
+    color:var(--ink);
+  }
+  .role-desc{
+    font-size:11.5px;
+    line-height:1.35;
+    color:rgba(59,36,22,0.6);
+  }
+  .role-card:has(input:checked){
+    border-color:var(--terracotta);
+    background:rgba(177,94,46,0.06);
+  }
+  .role-card:has(input:focus-visible){
+    outline:2px solid var(--navy);
+    outline-offset:2px;
+  }
+
+  .field{margin-bottom:18px;}
+  .field label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink);
+  }
+  .field input{
+    width:100%;
+    padding:12px 14px;
+    font-family:'Work Sans', sans-serif;
+    font-size:14.5px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    background:#fff;
+    color:var(--ink);
+    transition:border-color .15s ease;
+  }
+  .field input::placeholder{color:rgba(59,36,22,0.35);}
+  .field input:focus{
+    outline:none;
+    border-color:var(--terracotta);
+  }
+
+  .submit-btn{
+    width:100%;
+    padding:14px 16px;
+    margin-top:6px;
+    border:none;
+    border-radius:10px;
+    background:var(--terracotta);
+    color:#fff;
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .submit-btn:hover{background:#9c4e24;}
+  .submit-btn:focus-visible{outline:2px solid var(--navy);outline-offset:2px;}
+
+  .switch-line{
+    text-align:center;
+    margin:18px 0 0;
+    font-size:13.5px;
+    color:rgba(59,36,22,0.65);
+  }
+  .switch-line a{color:var(--maroon);font-weight:600;text-decoration:none;}
+  .switch-line a:hover{text-decoration:underline;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .wrap{grid-template-columns:1fr;}
+    .panel-story{padding:40px 28px;}
+    .motif{display:none;}
+    .role-grid{grid-template-columns:1fr;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- LEFT: heritage panel -->
+  <aside class="panel-story">
+    <div class="paper-texture"></div>
+
+    <div class="story-top">
+      <span class="mark">Virasat</span>
+      <span class="mark-sub">विरासत</span>
+    </div>
+
+    <figure class="motif" aria-hidden="true">
+      <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#3B2416" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="60" cy="40" r="14"/>
+          <path d="M60 54 L60 100 M60 66 L38 90 M60 66 L82 90 M60 100 L42 140 M60 100 L78 140"/>
+          <circle cx="140" cy="95" r="14"/>
+          <path d="M140 109 L140 155 M140 121 L118 145 M140 121 L162 145 M140 155 L122 195 M140 155 L158 195"/>
+          <path d="M20 210 Q100 185 180 210" stroke-width="2.5" opacity="0.6"/>
+        </g>
+      </svg>
+    </figure>
+
+    <blockquote class="story-quote">
+      Rooted in tradition,<br>
+      crafted by hands,<br>
+      alive in every generation.
+    </blockquote>
+
+    <p class="story-line">Different hands, same heartbeat &mdash; India.</p>
+
+    <div class="story-bottom">
+      <p class="story-note">Heritage is not a thing of the past,<br>it is a part of our tomorrow.</p>
+      <div class="swatches" aria-hidden="true">
+        <span style="background:#B15E2E"></span>
+        <span style="background:#7A2333"></span>
+        <span style="background:#D6A23B"></span>
+        <span style="background:#24405F"></span>
+        <span style="background:#375A3B"></span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: form panel -->
+  <main class="panel-form">
+    <div class="form-card">
+
+      <header class="form-head">
+        <h1>Create your account</h1>
+        <p>Join the community keeping India&rsquo;s craft alive.</p>
+      </header>
+
+      <form id="signupForm" method="POST">
+        {% csrf_token %}
+
+        <fieldset class="role-field">
+          <legend>I am joining as</legend>
+          <div class="role-grid">
+
+            <label class="role-card">
+              <input type="radio" name="role" value="artist" checked>
+              <span class="role-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M24 6c-9 0-16 6.5-16 15 0 5 3 8 7 8h2c1.5 0 2.5 1 2.5 2.5S18.5 34 17 34h-1c-4 0-7 3-7 6 0 4 4 6 9 6 12 0 22-9 22-21C40 13 33 6 24 6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="17" cy="18" r="2.4" fill="currentColor"/><circle cx="24" cy="14" r="2.4" fill="currentColor"/><circle cx="31" cy="18" r="2.4" fill="currentColor"/><circle cx="32" cy="26" r="2.4" fill="currentColor"/></svg>
+              </span>
+              <span class="role-name">Artist</span>
+              <span class="role-desc">Showcase and sell your craft</span>
+            </label>
+
+            <label class="role-card">
+              <input type="radio" name="role" value="explorer">
+              <span class="role-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M31 17 L21 21 L17 31 L27 27 Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="24" cy="24" r="1.8" fill="currentColor"/></svg>
+              </span>
+              <span class="role-name">Explorer</span>
+              <span class="role-desc">Discover stories and artisans</span>
+            </label>
+
+            <label class="role-card">
+              <input type="radio" name="role" value="government">
+              <span class="role-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M24 5 L40 12 V22 C40 32 33 40 24 43 C15 40 8 32 8 22 V12 Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="24" cy="22" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M24 15 V29 M17 22 H31" stroke="currentColor" stroke-width="1.4"/></svg>
+              </span>
+              <span class="role-name">Government</span>
+              <span class="role-desc">Register a cultural body</span>
+            </label>
+
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="e.g. meera_pottery" required autocomplete="username">
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="At least 8 characters" required autocomplete="new-password" minlength="8">
+        </div>
+
+        
+
+        <button type="submit" class="submit-btn">Create account</button>
+
+        <p class="switch-line">Already have an account? <a href="/login/">Log in</a></p>
+      </form>
+    </div>
+  </main>
+
+</div>
+
+
+
+</body>
+</html>

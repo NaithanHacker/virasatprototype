@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Mukta:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #2B1512;
+            --card: #F3E4CA;
+            --card-deep: #E7D2AA;
+            --maroon: #7A1F2B;
+            --maroon-deep: #591620;
+            --gold: #C79A3D;
+            --gold-soft: #DDB863;
+            --vermilion: #B8481E;
+            --ink: #35201A;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            height: 100%;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Mukta', sans-serif;
+        }
+
+        /* faint block-print style texture on the backdrop so it isn't flat */
+        body {
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(199,154,61,0.06) 0, transparent 45%),
+                radial-gradient(circle at 80% 75%, rgba(199,154,61,0.05) 0, transparent 45%);
+        }
+
+        h1, h2, h3, .post-name { font-family: 'Cormorant Garamond', serif; }
+
+        .page-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 0;
+            background: linear-gradient(var(--bg) 55%, transparent);
+        }
+
+        .page-header .mark {
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--gold-soft);
+        }
+
+        /* ---- Instagram-style full-viewport snap feed ---- */
+        .feed {
+            height: 100dvh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .art-card,
+        .empty-card {
+            height: 100dvh;
+            width: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 70px 16px 30px;
+        }
+
+        .post {
+            width: min(400px, 92vw);
+            max-height: calc(100dvh - 100px);
+            background: var(--card);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow:
+                0 20px 45px rgba(0,0,0,0.45),
+                0 0 0 1px rgba(199,154,61,0.35);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(122,31,43,0.15);
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--maroon);
+            color: var(--gold-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: 2px solid var(--gold);
+            flex-shrink: 0;
+        }
+
+        .post-header-text { min-width: 0; }
+
+        .post-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--maroon-deep);
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .post-by {
+            font-size: 0.8rem;
+            color: var(--vermilion);
+            font-weight: 500;
+        }
+
+        .post-image-wrap {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            background: var(--card-deep);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .post-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-image-wrap.no-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        .post-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px 4px;
+        }
+
+        .post-actions svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--maroon-deep);
+            fill: none;
+            stroke-width: 1.7;
+        }
+
+        .post-actions .spacer { flex: 1; }
+
+        .post-caption {
+            padding: 6px 16px 16px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            overflow-y: auto;
+        }
+
+        .post-caption .who {
+            font-weight: 600;
+            color: var(--maroon-deep);
+            margin-right: 6px;
+        }
+
+        .empty-card p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: var(--gold-soft);
+        }
+
+        .add-art-link {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            z-index: 30;
+            background: var(--maroon);
+            color: var(--gold-soft);
+            padding: 12px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border: 1px solid var(--gold);
+        }
+
+        .add-art-link:hover { background: var(--maroon-deep); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .feed { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <span class="mark">❁</span>
+        <h1>Cultural Arts</h1>
+        <span class="mark">❁</span>
+    </header>
+
+    <div class="feed">
+        {% for art in arts %}
+            <section class="art-card">
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">{{ art.name_artist |slice:"0:1 " }}</div>
+                        <div class="post-header-text">
+                            <div class="post-name">{{ art.name_artist }}</div>
+                            <div class="post-by">{{ art.name_art }}</div>
+                        </div>
+                    </div>
+
+                    <div class="post-image-wrap{% if not art.image_art %} no-image{% endif %}">
+                        {% if art.image_art %}
+                            <img src="{{ art.image_art.url }}" alt="{{ art.title_art }}">
+                        {% else %}
+                            <span>No image</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="post-actions">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.5-4.9-10-9.3C.3 8.1 2.2 4.5 5.9 4.1c2-.2 3.7.8 4.9 2.4C12 4.9 13.7 3.9 15.7 4.1c3.7.4 5.6 4 3.9 7.6C19.5 16.1 12 21 12 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.4 8.4 0 0 1-8.6 8.5 8.7 8.7 0 0 1-4-1L3 20l1.1-5.2a8.3 8.3 0 0 1-1.1-4.2A8.4 8.4 0 0 1 11.6 3a8.5 8.5 0 0 1 9.4 8.5z"/></svg>
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                        <span class="spacer"></span>
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 3h12v18l-6-4-6 4V3z"/></svg>
+                    </div>
+
+                    <div class="post-caption">
+                        <span class="who">{{ art.name_art }}</span>{{ art.description_art }}
+                    </div>
+                </article>
+            </section>
+        {% empty %}
+            <section class="empty-card">
+                <p>No art added yet.</p>
+            </section>
+        {% endfor %}
+    </div>
+
+    <a href="/artadd/" class="add-art-link">+ Add Art</a>
+
+</body>
+</html>

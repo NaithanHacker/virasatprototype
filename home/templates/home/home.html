@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Virasat — Discover the Culture of India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6EEDD;
+    --paper-deep:#EEE1C3;
+    --paper-card:#FBF6EA;
+    --ink:#2B2119;
+    --ink-soft:#5B4E3F;
+    --indigo:#1F3A5F;
+    --indigo-soft:#e7edf3;
+    --terracotta:#B5502D;
+    --terracotta-dark:#8F3D21;
+    --maroon:#6E2A2A;
+    --turmeric:#D89B2C;
+    --turmeric-soft:#FBEDC9;
+    --sage:#4C6B4F;
+    --sage-soft:#e6ede2;
+    --line:#D9C9A3;
+    --radius:14px;
+    --radius-sm:8px;
+    --shadow:0 1px 0 rgba(43,33,25,0.05);
+    --maxw:1240px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Karla',sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Rozha One',serif;
+    font-weight:400;
+    color:var(--maroon);
+    line-height:1.08;
+    margin:0;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;margin:0;padding:0;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:3px solid var(--turmeric);outline-offset:2px;}
+
+  /* ---------- decorative border strip ---------- */
+  .kolam-strip{
+    height:10px;
+    width:100%;
+    background-image:repeating-linear-gradient(115deg,var(--terracotta) 0 6px, transparent 6px 14px);
+    opacity:.55;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--paper);
+    border-bottom:2px solid var(--ink);
+  }
+  .headbar{
+    display:flex;align-items:center;gap:32px;
+    padding:16px 28px;
+    max-width:var(--maxw);margin:0 auto;
+  }
+  .logo{
+    font-family:'Rozha One',serif;
+    font-size:1.7rem;color:var(--maroon);
+    display:flex;align-items:center;gap:8px;
+    letter-spacing:.5px;
+  }
+  .logo .mark{
+    width:30px;height:30px;flex:none;
+  }
+  nav.primary{display:flex;gap:26px;flex:1;}
+  nav.primary a{
+    font-size:.98rem;font-weight:500;color:var(--ink);
+    padding:6px 2px;border-bottom:2px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  nav.primary a:hover{border-color:var(--terracotta);color:var(--terracotta-dark);}
+  .head-actions{display:flex;align-items:center;gap:14px;}
+  .icon-btn{
+    width:38px;height:38px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:transparent;border:1.5px solid var(--line);
+    color:var(--ink);
+  }
+  .icon-btn:hover{background:var(--paper-deep);}
+  .avatar-chip{
+    display:flex;align-items:center;gap:8px;
+    padding:5px 12px 5px 5px;border:1.5px solid var(--line);border-radius:999px;
+    background:var(--paper-card);
+  }
+  .avatar-chip .dot{width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;}
+  .avatar-chip span{font-size:.85rem;font-weight:600;}
+  .hamburger{display:none;background:none;border:none;padding:6px;}
+  .hamburger svg{width:26px;height:26px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--paper);
+    padding:56px 0 40px;
+    position:relative;overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;
+  }
+  .eyebrow-line{
+    display:flex;align-items:center;gap:10px;
+    color:var(--ink-soft);font-size:.92rem;margin-bottom:14px;
+  }
+  .eyebrow-line .seg{color:var(--terracotta-dark);font-weight:700;}
+  .hero h1{font-size:clamp(2.4rem,4.6vw,3.6rem);max-width:11ch;}
+  .hero p.lede{
+    margin-top:16px;max-width:46ch;color:var(--ink-soft);font-size:1.08rem;
+  }
+  .hero-art{width:100%;height:auto;}
+
+  /* search card */
+  .search-card{
+    margin-top:30px;
+    background:var(--paper-card);
+    border:2px solid var(--ink);
+    border-radius:20px;
+    padding:18px;
+    box-shadow:6px 6px 0 var(--terracotta);
+  }
+  .search-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .search-input{
+    flex:1 1 220px;display:flex;align-items:center;gap:10px;
+    background:var(--paper);border:1.5px solid var(--line);border-radius:999px;
+    padding:10px 16px;
+  }
+  .search-input input{
+    border:none;background:transparent;outline:none;font-size:.95rem;width:100%;
+    font-family:inherit;color:var(--ink);
+  }
+  .search-input svg{flex:none;width:18px;height:18px;color:var(--ink-soft);}
+  select.pill{
+    border:1.5px solid var(--line);background:var(--paper);border-radius:999px;
+    padding:10px 14px;font-size:.9rem;color:var(--ink);font-family:inherit;
+  }
+  .btn{
+    border-radius:999px;border:2px solid var(--ink);padding:10px 22px;
+    font-weight:700;font-size:.95rem;background:var(--turmeric);color:var(--ink);
+    transition:transform .12s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn.primary{background:var(--terracotta);border-color:var(--terracotta-dark);color:#fff;}
+  .btn.ghost{background:transparent;}
+  .btn.small{padding:7px 16px;font-size:.82rem;}
+  .btn.block{width:100%;}
+
+  /* ---------- section shell ---------- */
+  section.block{padding:52px 0;}
+  section.block.alt{background:var(--paper-deep);}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:20px;
+    margin-bottom:26px;flex-wrap:wrap;
+  }
+  .section-head h2{font-size:1.8rem;}
+  .section-head p{color:var(--ink-soft);margin-top:6px;max-width:52ch;}
+  .scroll-hint{font-size:.85rem;color:var(--ink-soft);}
+
+  /* ---------- featured artists ---------- */
+  .artist-scroller{
+    display:flex;gap:20px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity;
+  }
+  .artist-scroller::-webkit-scrollbar{height:8px;}
+  .artist-scroller::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px;}
+  .artist-card{
+    scroll-snap-align:start;
+    flex:0 0 258px;background:var(--paper-card);
+    border:1.5px solid var(--ink);border-radius:var(--radius);
+    padding:16px;display:flex;flex-direction:column;gap:10px;
+  }
+  .artist-top{display:flex;gap:12px;align-items:flex-start;}
+  .artist-photo{
+    width:64px;height:64px;border-radius:50%;flex:none;
+    background:var(--indigo-soft);display:flex;align-items:center;justify-content:center;
+    border:1.5px solid var(--line);
+  }
+  .artist-photo svg{width:34px;height:34px;color:var(--indigo);}
+  .artist-name{font-weight:700;font-size:1.02rem;}
+  .artist-meta{font-size:.8rem;color:var(--ink-soft);display:flex;align-items:center;gap:5px;margin-top:2px;}
+  .artist-desc{font-size:.86rem;color:var(--ink-soft);flex:1;}
+  .artist-actions{display:flex;gap:8px;margin-top:4px;}
+
+  /* ---------- filters + explore layout ---------- */
+  .explore-layout{display:grid;grid-template-columns:240px 1fr;gap:32px;align-items:start;}
+  .filters-panel{
+    position:sticky;top:92px;
+    background:var(--paper-card);border:1.5px solid var(--ink);border-radius:var(--radius);
+    padding:18px;
+  }
+  .filters-panel h3{font-size:1.05rem;margin-bottom:10px;}
+  .filter-group{margin-bottom:16px;}
+  .filter-group-title{
+    display:flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem;
+    color:var(--terracotta-dark);margin-bottom:8px;
+  }
+  .filter-group-title svg{width:16px;height:16px;}
+  .filter-opt{
+    display:flex;align-items:center;gap:8px;font-size:.88rem;padding:4px 0;color:var(--ink-soft);
+  }
+  .filter-opt input{accent-color:var(--terracotta);width:15px;height:15px;}
+  .filter-more{font-size:.82rem;color:var(--indigo);font-weight:700;background:none;border:none;padding:2px 0;}
+  .filters-clear{font-size:.8rem;color:var(--ink-soft);text-decoration:underline;background:none;border:none;margin-top:6px;}
+  .mobile-filter-toggle{display:none;}
+
+  /* tabs */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+  .tab{
+    border:1.5px solid var(--ink);border-radius:999px;padding:8px 18px;
+    background:var(--paper-card);font-size:.88rem;font-weight:600;
+  }
+  .tab.active{background:var(--maroon);border-color:var(--maroon);color:#fff;}
+
+  /* card grid */
+  .card-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;
+  }
+  .content-card{
+    background:var(--paper-card);border:1.5px solid var(--ink);border-radius:var(--radius);
+    overflow:hidden;display:flex;flex-direction:column;
+  }
+  .content-card .thumb{
+    height:150px;position:relative;display:flex;align-items:center;justify-content:center;
+    color:#fff;overflow:hidden;
+  }
+  .content-card .thumb svg{width:70%;height:70%;opacity:.9;}
+  .badge{
+    position:absolute;top:10px;left:10px;
+    font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:999px;
+    display:flex;align-items:center;gap:5px;
+  }
+  .badge.recognised{background:var(--turmeric-soft);color:var(--terracotta-dark);border:1px solid var(--turmeric);}
+  .badge.learning{background:var(--sage-soft);color:var(--sage);border:1px solid var(--sage);}
+  .badge.process{background:var(--indigo-soft);color:var(--indigo);border:1px solid var(--indigo);}
+  .like-btn{
+    position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;
+    background:rgba(251,246,234,.92);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .like-btn svg{width:16px;height:16px;color:var(--terracotta);}
+  .like-btn.liked svg{fill:var(--terracotta);}
+  .play-badge{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  }
+  .play-badge .circle{
+    width:44px;height:44px;border-radius:50%;background:rgba(251,246,234,.9);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .play-badge svg{width:18px;height:18px;color:var(--maroon);}
+  .card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .card-kicker{font-size:.74rem;font-weight:700;color:var(--ink-soft);display:flex;gap:6px;align-items:center;}
+  .card-title{font-weight:700;font-size:1.02rem;color:var(--ink);}
+  .card-sub{font-size:.82rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:x;gap:10px;}
+  .card-sub span{display:flex;align-items:center;gap:4px;}
+  .card-sub svg{width:13px;height:13px;}
+  .card-foot{
+    margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:6px;
+  }
+  .price{font-weight:700;color:var(--terracotta-dark);}
+  .rating{font-size:.8rem;color:var(--turmeric);font-weight:700;}
+
+  /* thumb color variants (art-form themed) */
+  .thumb.painting{background:linear-gradient(135deg,#B5502D,#8F3D21);}
+  .thumb.pottery{background:linear-gradient(135deg,#8A5A34,#5E3B21);}
+  .thumb.textile{background:linear-gradient(135deg,#1F3A5F,#132539);}
+  .thumb.woodcraft{background:linear-gradient(135deg,#4C6B4F,#33472F);}
+  .thumb.metalwork{background:linear-gradient(135deg,#6E2A2A,#471A1A);}
+
+  /* ---------- certify CTA band ---------- */
+  .certify-band{
+    background:var(--indigo);color:#F6EEDD;padding:46px 0;
+  }
+  .certify-grid{
+    display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+  }
+  .certify-grid h2{color:#F6EEDD;font-size:1.7rem;max-width:16ch;}
+  .certify-grid p{color:#cdd8e3;margin-top:10px;max-width:56ch;}
+  .certify-band .btn{background:var(--turmeric);border-color:var(--turmeric);}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--maroon);color:#F1E4D3;padding:46px 0 26px;}
+  .foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px;}
+  .foot-grid h4{font-size:.92rem;letter-spacing:.02em;margin-bottom:12px;color:#F6EEDD;}
+  .foot-grid a{display:block;font-size:.87rem;color:#e6d3bc;padding:4px 0;}
+  .foot-grid a:hover{color:#fff;}
+  .foot-logo{font-family:'Rozha One',serif;font-size:1.5rem;color:#fff;}
+  .foot-tag{font-size:.85rem;color:#e6d3bc;margin-top:10px;max-width:34ch;}
+  .foot-bottom{
+    margin-top:34px;padding-top:18px;border-top:1px solid rgba(246,238,221,.2);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:.8rem;color:#cdb391;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-art{max-width:340px;margin:0 auto;}
+    .explore-layout{grid-template-columns:1fr;}
+    .filters-panel{position:static;display:none;}
+    .filters-panel.open{display:block;}
+    .mobile-filter-toggle{display:flex;margin-bottom:18px;}
+    .certify-grid{grid-template-columns:1fr;text-align:left;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:760px){
+    nav.primary{display:none;}
+    .hamburger{display:flex;}
+    .avatar-chip span{display:none;}
+    .headbar{padding:14px 20px;}
+    .wrap{padding:0 20px;}
+    .search-row{flex-direction:column;}
+    select.pill{width:100%;}
+    .foot-grid{grid-template-columns:1fr;}
+  }
+
+  /* mobile nav drawer */
+  .mobile-nav{
+    display:none;flex-direction:column;gap:2px;
+    border-top:1.5px solid var(--ink);background:var(--paper);
+  }
+  .mobile-nav.open{display:flex;}
+  .mobile-nav a{padding:14px 24px;font-weight:600;border-bottom:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headbar">
+    <a class="logo" href="#top">
+      <svg class="mark" viewBox="0 0 40 40" fill="none"><path d="M20 4C12 10 8 18 8 26c0 6.6 5.4 10 12 10s12-3.4 12-10c0-8-4-16-12-22Z" fill="#B5502D"/><path d="M20 10c-5 4.5-8 10-8 15.5C12 30.5 15.6 33 20 33s8-2.5 8-7.5c0-5.5-3-11-8-15.5Z" fill="#D89B2C"/></svg>
+      Virasat
+    </a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/explore/">Explore</a>
+      <a href="#artists">Artists</a>
+      <a href="#learn">Learn</a>
+      <a href="/sell/">Shop</a>
+      <a href="#support">Support</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="head-actions">
+      <button class="icon-btn" aria-label="Saved items" title="Saved">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7.5-4.7-9.8-9.4C.6 7.3 2.7 3.7 6.3 3.4c2-.2 3.9.7 5.2 2.4 1.3-1.7 3.2-2.6 5.2-2.4 3.6.3 5.7 3.9 4.1 7.7C19.5 15.8 12 20.5 12 20.5Z"/></svg>
+      </button>
+      <div class="avatar-chip" title="Your account">
+        <span class="dot">{{ user.username|slice:":1" }}</span>
+        <span>{{ user.username }}</span>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+    <a href="#explore">Explore</a>
+    <a href="#artists">Artists</a>
+    <a href="#learn">Learn</a>
+    <a href="#shop">Shop</a>
+    <a href="#support">Support</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<div id="top"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow-line">
+        <span class="seg">Explore</span> · <span class="seg">Learn</span> · <span class="seg">Collect</span> · <span class="seg">Preserve</span>
+      </div>
+      <h1>Discover the culture of India</h1>
+      <p class="lede">A living archive of the artisans, weavers, potters and carvers keeping India's craft traditions alive — meet the makers, learn their techniques, and bring a piece of it home.</p>
+
+      <div class="search-card">
+        <div class="search-row">
+          <div class="search-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+            <input type="text" placeholder="Search by art form, artist or state…" id="searchInput" />
+          </div>
+          <select class="pill" id="stateSelect">
+            <option value="">State</option>
+            <option>Andhra Pradesh</option>
+            <option>Arunachal Pradesh</option>
+            <option>Assam</option>
+            <option>Bihar</option>
+          </select>
+          <select class="pill" id="formSelect">
+            <option value="">Art form</option>
+            <option>Painting</option>
+            <option>Pottery</option>
+            <option>Textile</option>
+            <option>Woodcraft</option>
+          </select>
+          <select class="pill" id="recogSelect">
+            <option value="">Recognition</option>
+            <option>GI recognised</option>
+            <option>Under review</option>
+          </select>
+          <button class="btn primary" id="searchBtn">Search</button>
+        </div>
+      </div>
+    </div>
+
+    <svg class="hero-art" viewBox="0 0 420 380" fill="none" aria-hidden="true">
+      <circle cx="210" cy="190" r="175" fill="var(--paper-deep)"/>
+      <g stroke="var(--maroon)" stroke-width="4" stroke-linecap="round" fill="none">
+        <!-- warli dancers ring -->
+        <g transform="translate(210,190)">
+          <g id="dancerTemplate">
+            <circle r="7" cy="-92" fill="var(--maroon)" stroke="none"/>
+            <path d="M0 -85 L0 -60 M-14 -68 L14 -68 M0 -60 L-12 -38 M0 -60 L12 -38"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- rotated dancer figures generated by JS below hero -->
+
+<div class="kolam-strip"></div>
+
+<!-- ============ FEATURED ARTISTS ============ -->
+<section class="block" id="artists">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Featured artists</h2>
+        <p>Meet the makers behind the craft — reach out, follow their process, or shop their work directly.</p>
+      </div>
+      <span class="scroll-hint">Scroll to see more →</span>
+    </div>
+    <div class="artist-scroller" id="artistScroller"></div>
+  </div>
+</section>
+
+<!-- ============ EXPLORE / FILTERS ============ -->
+<section class="block alt" id="explore">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Explore culture, learning &amp; process</h2>
+        <p>Products ready to collect, techniques you can learn, and the process behind every piece — all in one feed.</p>
+      </div>
+    </div>
+
+    <button class="btn ghost mobile-filter-toggle" id="filterToggle">Filters</button>
+
+    <div class="explore-layout">
+      <aside class="filters-panel" id="filtersPanel">
+        <h3>Filters</h3>
+
+        <div class="filter-group">
+          <div class="filter-group-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            State
+          </div>
+          <label class="filter-opt"><input type="checkbox" data-filter="state" value="Andhra Pradesh"> Andhra Pradesh</label>
+          <label class="filter-opt"><input type="checkbox" data-filter="state" value="Arunachal Pradesh"> Arunachal Pradesh</label>
+          <label class="filter-opt"><input type="checkbox" data-filter="state" value="Assam"> Assam</label>
+          <label class="filter-opt"><input type="checkbox" data-filter="state" value="Bihar"> Bihar</label>
+          <button class="filter-more">+ more states</button>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-group-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 20 4M9 9l6 6"/></svg>
+            Art form
+          </div>
+          <label class="filter-opt"><input type="checkbox" data-filter="form" value="painting"> Painting</label>
+          <label class="filter-opt"><input type="checkbox" data-filter="form" value="pottery"> Pottery</label>
+          <label class="filter-opt"><input type="checkbox" data-filter="form" value="textile"> Textile</label>
+          <label class="filter-opt"><input type="checkbox" data-filter="form" value="woodcraft"> Woodcraft</label>
+          <button class="filter-more">+ more forms</button>
+        </div>
+
+        <button class="filters-clear" id="clearFilters">Clear all filters</button>
+      </aside>
+
+      <div>
+        <div class="tabs" id="tabRow">
+          <button class="tab active" data-tab="all">All</button>
+          <button class="tab" data-tab="product">Shop</button>
+          <button class="tab" data-tab="learning">Learn</button>
+          <button class="tab" data-tab="process">Process</button>
+        </div>
+
+        <div class="card-grid" id="exploreGrid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CERTIFY BAND ============ -->
+<section class="certify-band" id="support">
+  <div class="wrap certify-grid">
+    <div>
+      <h2>Every craft has a story worth recognising</h2>
+      <p>Virasat also works with government certifying bodies to help art forms and folk traditions apply for official recognition — the same way regional produce earns a GI tag. If you represent a certifying body, you can review and approve applications here.</p>
+    </div>
+    <a class="btn" href="#">Apply for recognition</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="about">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-logo">Virasat</div>
+      <p class="foot-tag">A shared home for India's artisans, the people who love their work, and the bodies who preserve it.</p>
+    </div>
+    <div>
+      <h4>Discover</h4>
+      <a href="#explore">Explore</a>
+      <a href="#artists">Artists</a>
+      <a href="#learn">Learn</a>
+      <a href="#shop">Shop</a>
+    </div>
+    <div>
+      <h4>For makers</h4>
+      <a href="#">Sell your craft</a>
+      <a href="#">Teach a technique</a>
+      <a href="#">Apply for recognition</a>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <a href="#">Help centre</a>
+      <a href="#">Contact us</a>
+      <a href="#">About Virasat</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Virasat. Preserving craft, one story at a time.</span>
+    <span>Made with respect for the makers.</span>
+  </div>
+</footer>
+
+<script>
+/* ---------------- icon library (art-form thumbnails) ---------------- */
+const artIcons = {
+  painting: `<svg viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><circle cx="50" cy="24" r="5" fill="white" stroke="none"/><path d="M50 29v18M38 36h24M50 47l-16 30M50 47l16 30"/><circle cx="76" cy="24" r="5" fill="white" stroke="none"/><path d="M76 29v18M66 36h20M76 47l-12 30M76 47l14 26"/><circle cx="24" cy="30" r="5" fill="white" stroke="none"/><path d="M24 35v16M15 41h18M24 51l-10 24M24 51l12 22"/></svg>`,
+  pottery: `<svg viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><path d="M38 16h24l4 12H34l4-12Z"/><path d="M34 28c-8 10-10 20-10 30 0 16 12 26 26 26s26-10 26-26c0-10-2-20-10-30"/><path d="M22 58h56"/></svg>`,
+  textile: `<svg viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="3"><rect x="16" y="16" width="68" height="68" rx="4"/><path d="M16 34h68M16 50h68M16 66h68M34 16v68M50 16v68M66 16v68"/></svg>`,
+  woodcraft: `<svg viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="34"/><circle cx="50" cy="50" r="18"/><path d="M50 16v8M50 76v8M84 50h-8M24 50h-8M73.9 26.1l-5.6 5.6M31.7 68.3l-5.6 5.6M73.9 73.9l-5.6-5.6M31.7 31.7l-5.6-5.6"/></svg>`,
+  metalwork: `<svg viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 70 66 34"/><path d="M60 24l16 16-10 10-16-16 10-10Z"/><path d="M30 70l-10 14 14-10"/></svg>`
+};
+const iconPlay = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7Z"/></svg>`;
+const iconHeart = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20.5s-7.5-4.7-9.8-9.4C.6 7.3 2.7 3.7 6.3 3.4c2-.2 3.9.7 5.2 2.4 1.3-1.7 3.2-2.6 5.2-2.4 3.6.3 5.7 3.9 4.1 7.7C19.5 15.8 12 20.5 12 20.5Z"/></svg>`;
+const iconPin = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>`;
+const iconClock = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`;
+const iconUser = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6"/></svg>`;
+
+/* ---------------- data ---------------- */
+const artists = [
+  {name:"Kamla Devi", form:"Madhubani Painting", state:"Bihar", desc:"Third-generation Madhubani artist known for fine line work and natural dyes.", art:"painting"},
+  {name:"Manoj Kumhar", form:"Terracotta Pottery", state:"Assam", desc:"Runs a family wheel-pottery workshop, teaches traditional Assamese firing methods.", art:"pottery"},
+  {name:"Tashi Norbu", form:"Thangka Weaving", state:"Arunachal Pradesh", desc:"Handloom weaver reviving Monpa textile motifs lost over two generations.", art:"textile"},
+  {name:"Ranga Rao", form:"Nirmal Woodcraft", state:"Andhra Pradesh", desc:"Carves gilded wooden toys using techniques passed down since the 16th century.", art:"woodcraft"},
+  {name:"Suresh Pal", form:"Bidriware Metalwork", state:"Andhra Pradesh", desc:"Specialises in blackened-metal inlay work with silver wire detailing.", art:"metalwork"},
+  {name:"Anita Baruah", form:"Bamboo Craft", state:"Assam", desc:"Builds functional bamboo homeware using zero-waste weaving techniques.", art:"woodcraft"}
+];
+
+const explore = [
+  {type:"product", art:"textile", title:"Hand-loomed Assam Gamosa", loc:"Assam", price:"₹1,450", rating:"4.8", recognised:true},
+  {type:"learning", art:"painting", title:"Madhubani Painting Basics", by:"Kamla Devi", duration:"6 weeks", level:"Beginner", recognised:true},
+  {type:"process", art:"pottery", title:"From Clay to Kiln", by:"Manoj Kumhar", duration:"14 min"},
+  {type:"product", art:"woodcraft", title:"Nirmal Gilded Elephant", loc:"Andhra Pradesh", price:"₹3,200", rating:"4.9", recognised:true},
+  {type:"product", art:"metalwork", title:"Bidriware Vase, Silver Inlay", loc:"Andhra Pradesh", price:"₹5,600", rating:"4.7", recognised:false},
+  {type:"learning", art:"textile", title:"Intro to Monpa Weaving", by:"Tashi Norbu", duration:"8 weeks", level:"Intermediate", recognised:false},
+  {type:"process", art:"woodcraft", title:"Carving a Nirmal Toy", by:"Ranga Rao", duration:"9 min"},
+  {type:"product", art:"pottery", title:"Terracotta Water Set", loc:"Assam", price:"₹980", rating:"4.6", recognised:true},
+  {type:"learning", art:"woodcraft", title:"Bamboo Weaving for Home", by:"Anita Baruah", duration:"4 weeks", level:"Beginner", recognised:false},
+  {type:"process", art:"textile", title:"Dyeing with Natural Indigo", by:"Tashi Norbu", duration:"11 min"}
+];
+
+/* ---------------- render: artists ---------------- */
+const artistScroller = document.getElementById('artistScroller');
+artistScroller.innerHTML = artists.map(a => `
+  <article class="artist-card">
+    <div class="artist-top">
+      <div class="artist-photo">${iconUser}</div>
+      <div>
+        <div class="artist-name">${a.name}</div>
+        <div class="artist-meta">${iconPin}${a.state}</div>
+        <div class="artist-meta">${a.form}</div>
+      </div>
+    </div>
+    <p class="artist-desc">${a.desc}</p>
+    <div class="artist-actions">
+      <button class="btn small primary">Contact</button>
+      <button class="btn small ghost">Shop</button>
+    </div>
+  </article>
+`).join('');
+
+/* ---------------- render: explore grid ---------------- */
+const exploreGrid = document.getElementById('exploreGrid');
+
+function cardMarkup(item){
+  if(item.type === 'product'){
+    return `
+    <article class="content-card" data-type="product" data-art="${item.art}">
+      <div class="thumb ${item.art}">
+        ${item.recognised ? `<span class="badge recognised">GI recognised</span>` : ''}
+        <button class="like-btn" aria-label="Save item">${iconHeart}</button>
+        ${artIcons[item.art]}
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Shop</div>
+        <div class="card-title">${item.title}</div>
+        <div class="card-sub"><span>${iconPin}${item.loc}</span></div>
+        <div class="card-foot">
+          <span class="price">${item.price}</span>
+          <span class="rating">★ ${item.rating}</span>
+        </div>
+      </div>
+    </article>`;
+  }
+  if(item.type === 'learning'){
+    return `
+    <article class="content-card" data-type="learning" data-art="${item.art}">
+      <div class="thumb ${item.art}">
+        <span class="badge learning">${item.level}</span>
+        <button class="like-btn" aria-label="Save item">${iconHeart}</button>
+        ${artIcons[item.art]}
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Learn</div>
+        <div class="card-title">${item.title}</div>
+        <div class="card-sub">
+          <span>${iconClock}${item.duration}</span>
+          <span>${iconUser}${item.by}</span>
+        </div>
+        <div class="card-foot">
+          <button class="btn small primary block">Enroll now</button>
+        </div>
+      </div>
+    </article>`;
+  }
+  // process
+  return `
+    <article class="content-card" data-type="process" data-art="${item.art}">
+      <div class="thumb ${item.art}">
+        <span class="badge process">Process</span>
+        <div class="play-badge"><div class="circle">${iconPlay}</div></div>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Watch</div>
+        <div class="card-title">${item.title}</div>
+        <div class="card-sub">
+          <span>${iconClock}${item.duration}</span>
+          <span>${iconUser}${item.by}</span>
+        </div>
+        <div class="card-foot">
+          <button class="btn small ghost block">Watch process</button>
+        </div>
+      </div>
+    </article>`;
+}
+
+function renderExplore(){
+  const activeTab = document.querySelector('.tab.active').dataset.tab;
+  const checkedForms = [...document.querySelectorAll('[data-filter="form"]:checked')].map(c=>c.value);
+  const filtered = explore.filter(item=>{
+    const tabOk = activeTab === 'all' || item.type === activeTab;
+    const formOk = checkedForms.length === 0 || checkedForms.includes(item.art);
+    return tabOk && formOk;
+  });
+  exploreGrid.innerHTML = filtered.length
+    ? filtered.map(cardMarkup).join('')
+    : `<p style="color:var(--ink-soft);grid-column:1/-1;">No items match your filters yet — try clearing a filter.</p>`;
+  attachLikeHandlers();
+}
+
+function attachLikeHandlers(){
+  document.querySelectorAll('.like-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> btn.classList.toggle('liked'));
+  });
+}
+
+renderExplore();
+
+/* ---------------- tabs ---------------- */
+document.getElementById('tabRow').addEventListener('click', e=>{
+  const tab = e.target.closest('.tab');
+  if(!tab) return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  renderExplore();
+});
+
+/* ---------------- filters ---------------- */
+document.querySelectorAll('[data-filter="form"]').forEach(cb=>{
+  cb.addEventListener('change', renderExplore);
+});
+document.getElementById('clearFilters').addEventListener('click', ()=>{
+  document.querySelectorAll('.filters-panel input[type="checkbox"]').forEach(c=>c.checked=false);
+  renderExplore();
+});
+
+/* ---------------- mobile nav + filter drawer ---------------- */
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileNav = document.getElementById('mobileNav');
+hamburgerBtn.addEventListener('click', ()=>{
+  const open = mobileNav.classList.toggle('open');
+  hamburgerBtn.setAttribute('aria-expanded', open);
+});
+
+const filterToggle = document.getElementById('filterToggle');
+const filtersPanel = document.getElementById('filtersPanel');
+filterToggle.addEventListener('click', ()=>{
+  filtersPanel.classList.toggle('open');
+  filterToggle.textContent = filtersPanel.classList.contains('open') ? 'Hide filters' : 'Filters';
+});
+
+/* ---------------- search bar (demo) ---------------- */
+document.getElementById('searchBtn').addEventListener('click', ()=>{
+  document.getElementById('explore').scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>

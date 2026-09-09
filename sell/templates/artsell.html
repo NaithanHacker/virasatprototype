@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>artshell</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="name_of_art" placeholder="Enter the Name of art">
+        <input type="text" name="name_of_artist" placeholder="Enter the Name of artist">
+        <input type="number" name="price_of_art" placeholder="Enter the Price of art">
+        <textarea name="desc_of_art" id="" placeholder="Enter the Description"></textarea>
+        <input type="file" name="image_of_art" placeholder="Provide the Image">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
