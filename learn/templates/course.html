@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+
+
+        <div>
+            {% for course in courses %}
+                <p>Name is: {{ course.course_name }}</P>
+                <p>Tutor Name is: {{ course.course_tutot_name }}</P>
+                <p>Description is: {{ course.course_desc }}</P>
+                <p>Price is: {{ course.course.price }}</P>
+                {% if course.course_video %}
+                    <video width="320" height="240" controls>
+                        <source src="{{ course.course_video }}" type="video/mp4">
+                        Enter MP4
+                    </video>
+                {% endif %}
+            {% empty %}
+                <p>Empty Brother</p>
+            {% endfor %}
+
+            <a href='/courseadd/'>+ Add Course</a>
+            
+    </body>
+</html>

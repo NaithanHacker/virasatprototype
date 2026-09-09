@@ -3,17 +3,792 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>artshell</title>
+    <title>Add Art | Virasat</title>
+    <link rel="stylesheet" href="art_sell.css">
+
+    <style>
+        * {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 60px 20px;
+    background:
+        linear-gradient(rgba(253, 245, 230, 0.48), rgba(234, 221, 202, 0.55)),
+        url("https://i.pinimg.com/736x/46/c0/62/46c062a5324d128e2e83a16d9c306e03.jpg");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #3d3028;
+    font-family: "Segoe UI", Arial, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(253, 245, 230, 0.08);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.12),
+        transparent 45%,
+        rgba(197, 162, 83, 0.06)
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-decoration {
+    position: fixed;
+    color: #355E38;
+    opacity: 0.07;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 130px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.decoration-left {
+    left: -35px;
+    top: 42%;
+    transform: rotate(-25deg);
+}
+
+.decoration-right {
+    right: -35px;
+    top: 25%;
+    transform: rotate(25deg);
+}
+
+.add-art-card {
+    position: relative;
+    width: min(760px, 92%);
+    margin: 0 auto;
+    padding: 13px;
+    background: #FDF5E6;
+    border: 1px solid #C5A253;
+    box-shadow:
+        0 25px 60px rgba(110, 38, 14, 0.14),
+        0 5px 15px rgba(110, 38, 14, 0.07);
+    animation: cardReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    z-index: 2;
+}
+
+.add-art-card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid #E0C98D;
+    pointer-events: none;
+}
+
+.add-art-card::after {
+    content: "";
+    position: absolute;
+    inset: 25px;
+    border: 1px solid rgba(197, 162, 83, 0.35);
+    pointer-events: none;
+}
+
+.card-inner {
+    position: relative;
+    padding: 45px 60px 40px;
+    z-index: 2;
+}
+
+.card-corner {
+    position: absolute;
+    color: #C5A253;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28px;
+    z-index: 3;
+}
+
+.corner-tl {
+    top: 18px;
+    left: 18px;
+}
+
+.corner-tr {
+    top: 18px;
+    right: 18px;
+    transform: scaleX(-1);
+}
+
+.corner-bl {
+    bottom: 18px;
+    left: 18px;
+    transform: scaleY(-1);
+}
+
+.corner-br {
+    bottom: 18px;
+    right: 18px;
+    transform: scale(-1);
+}
+
+.card-header {
+    text-align: center;
+    margin: 0 5px 35px;
+}
+
+.eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #355E38;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    animation: fadeDown 0.8s 0.15s both;
+}
+
+.card-header h1 {
+    margin: 0;
+    color: #6E260E;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(30px, 4vw, 40px);
+    font-weight: 600;
+    line-height: 1.1;
+    animation: fadeDown 0.8s 0.25s both;
+}
+
+.ornament {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 15px auto 13px;
+    color: #C5A253;
+    animation: ornamentReveal 1s 0.4s both;
+}
+
+.ornament span {
+    width: 55px;
+    height: 1px;
+    background: #C5A253;
+    opacity: 0.6;
+}
+
+.ornament b {
+    font-size: 9px;
+    font-weight: normal;
+}
+
+.ornament i {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    font-style: normal;
+}
+
+.intro {
+    max-width: 500px;
+    margin: 0 auto;
+    color: #806f64;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 14px;
+    line-height: 1.6;
+    animation: fadeDown 0.8s 0.5s both;
+}
+
+form {
+    position: relative;
+    z-index: 2;
+    margin: 0 5px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+}
+
+.form-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    animation: fieldReveal 0.7s both;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.35s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.45s;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: 0.55s;
+}
+
+.form-group:nth-child(4) {
+    animation-delay: 0.65s;
+}
+
+.form-group:nth-child(5) {
+    animation-delay: 0.75s;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+    color: #355E38;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.label-number {
+    color: #C5A253;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.input-wrap,
+.price-wrap,
+.textarea-wrap {
+    position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #D8C28A;
+    background: #F2FDEF;
+    color: #3d3028;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition:
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease,
+        transform 0.35s ease;
+}
+
+.form-group input {
+    height: 48px;
+    padding: 0 14px;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    padding: 14px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9a8b80;
+    transition: opacity 0.3s ease;
+}
+
+.form-group input:focus::placeholder,
+.form-group textarea:focus::placeholder {
+    opacity: 0.35;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    background: #fffdf8;
+    border-color: #C5A253;
+    box-shadow:
+        0 7px 20px rgba(110, 38, 14, 0.08),
+        0 0 0 3px rgba(197, 162, 83, 0.1);
+    transform: translateY(-2px);
+}
+
+.input-wrap::after,
+.price-wrap::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #C5A253;
+    transition: width 0.4s ease, left 0.4s ease;
+}
+
+.input-wrap:focus-within::after,
+.price-wrap:focus-within::after {
+    width: 100%;
+    left: 0;
+}
+
+.price-wrap .currency {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #800020;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 19px;
+    z-index: 1;
+}
+
+.price-wrap input {
+    padding-left: 40px;
+}
+
+.textarea-corner {
+    position: absolute;
+    right: 11px;
+    bottom: 7px;
+    color: #C5A253;
+    opacity: 0.55;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 19px;
+    pointer-events: none;
+}
+
+.upload-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 82px;
+    margin: 0 2px;
+    padding: 15px 18px;
+    background: #F2FDEF;
+    border: 1px dashed #C5A253;
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+        background 0.35s ease,
+        border-color 0.35s ease,
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.upload-box::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(197, 162, 83, 0.25);
+    pointer-events: none;
+}
+
+.upload-box:hover {
+    background: #fffdf8;
+    border-color: #355E38;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(53, 94, 56, 0.09);
+}
+
+.upload-icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    border: 1px solid #C5A253;
+    color: #355E38;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+    transition: transform 0.4s ease, background 0.4s ease;
+}
+
+.upload-box:hover .upload-icon {
+    transform: translateY(-4px);
+    background: #F5DEB3;
+}
+
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.upload-content strong {
+    color: #6E260E;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px;
+}
+
+.upload-content small {
+    color: #806f64;
+    font-size: 12px;
+}
+
+.upload-arrow {
+    margin-left: auto;
+    color: #C5A253;
+    font-size: 21px;
+    transition: transform 0.4s ease, color 0.4s ease;
+}
+
+.upload-box:hover .upload-arrow {
+    color: #355E38;
+    transform: translateX(6px);
+}
+
+.upload-box input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.submit-area {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 30px 5px 0;
+}
+
+.submit-line {
+    flex: 1;
+    height: 1px;
+    background: #E0C98D;
+}
+
+form button {
+    position: relative;
+    min-width: 155px;
+    padding: 13px 20px;
+    border: 1px solid #6E260E;
+    background: #800020;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+        transform 0.35s ease,
+        background 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+form button::before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -40%;
+    width: 30%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(25deg);
+    transition: left 0.65s ease;
+}
+
+form button:hover {
+    background: #6E260E;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(128, 0, 32, 0.25);
+}
+
+form button:hover::before {
+    left: 125%;
+}
+
+form button b {
+    margin-left: 10px;
+    font-size: 17px;
+    font-weight: normal;
+    transition: transform 0.3s ease;
+}
+
+form button:hover b {
+    display: inline-block;
+    transform: translateX(5px);
+}
+
+form button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.card-footer {
+    margin-top: 30px;
+    color: #9a8050;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.card-footer span {
+    margin: 0 8px;
+    color: #C5A253;
+}
+
+@keyframes cardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes ornamentReveal {
+    from {
+        opacity: 0;
+        letter-spacing: 0;
+    }
+
+    to {
+        opacity: 1;
+        letter-spacing: 6px;
+    }
+}
+
+@keyframes fieldReveal {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 25px 12px;
+    }
+
+    .add-art-card {
+        width: 100%;
+    }
+
+    .card-inner {
+        padding: 42px 25px 35px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .card-header {
+        margin-bottom: 35px;
+    }
+
+    .card-header h1 {
+        font-size: 34px;
+    }
+
+    .intro {
+        font-size: 14px;
+    }
+
+    .submit-area {
+        gap: 12px;
+    }
+
+    .submit-line {
+        display: none;
+    }
+
+    form button {
+        width: 100%;
+    }
+
+    .upload-box {
+        padding: 18px;
+    }
+
+    .decoration-left,
+    .decoration-right {
+        display: none;
+    }
+}
+    </style>
 </head>
 <body>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="text" name="name_of_art" placeholder="Enter the Name of art">
-        <input type="text" name="name_of_artist" placeholder="Enter the Name of artist">
-        <input type="number" name="price_of_art" placeholder="Enter the Price of art">
-        <textarea name="desc_of_art" id="" placeholder="Enter the Description"></textarea>
-        <input type="file" name="image_of_art" placeholder="Provide the Image">
-        <button type="submit">Submit</button>
-    </form>
+
+    <div class="page-decoration decoration-left">❧</div>
+    <div class="page-decoration decoration-right">❧</div>
+
+    <main class="add-art-card">
+
+        <div class="card-corner corner-tl">❧</div>
+        <div class="card-corner corner-tr">❧</div>
+        <div class="card-corner corner-bl">❧</div>
+        <div class="card-corner corner-br">❧</div>
+
+        <div class="card-header">
+            <span class="eyebrow">VIRASAT · ARTISAN COLLECTION</span>
+
+            <h1>Add Your Art</h1>
+
+            <div class="ornament">
+                <span></span>
+                <b>✦</b>
+                <i>❧</i>
+                <b>✦</b>
+                <span></span>
+            </div>
+
+            <p class="intro">
+                Share your artwork and become a part of India's living heritage.
+            </p>
+        </div>
+
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="name_of_art">
+                        <span class="label-number">01</span>
+                        Name of Art
+                    </label>
+
+                    <div class="input-wrap">
+                        <input
+                            type="text"
+                            id="name_of_art"
+                            name="name_of_art"
+                            placeholder="Enter the name of art"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name_of_artist">
+                        <span class="label-number">02</span>
+                        Name of Artist
+                    </label>
+
+                    <div class="input-wrap">
+                        <input
+                            type="text"
+                            id="name_of_artist"
+                            name="name_of_artist"
+                            placeholder="Enter the name of artist"
+                        >
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="price_of_art">
+                    <span class="label-number">03</span>
+                    Price of Art
+                </label>
+
+                <div class="price-wrap">
+                    <span class="currency">₹</span>
+                    <input
+                        type="number"
+                        id="price_of_art"
+                        name="price_of_art"
+                        placeholder="Enter the price of art"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="desc_of_art">
+                    <span class="label-number">04</span>
+                    Description
+                </label>
+
+                <div class="textarea-wrap">
+                    <textarea
+                        id="desc_of_art"
+                        name="desc_of_art"
+                        placeholder="Tell us the story behind your artwork..."
+                    ></textarea>
+
+                    <span class="textarea-corner">❧</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="image_of_art">
+                    <span class="label-number">05</span>
+                    Artwork Image
+                </label>
+
+                <label class="upload-box" for="image_of_art">
+
+                    <div class="upload-icon">
+                        <span>↑</span>
+                    </div>
+
+                    <div class="upload-content">
+                        <strong>Choose your artwork</strong>
+                        <small>Click here to browse your files</small>
+                    </div>
+
+                    <div class="upload-arrow">→</div>
+
+                    <input
+                        type="file"
+                        id="image_of_art"
+                        name="image_of_art"
+                    >
+
+                </label>
+            </div>
+
+            <div class="submit-area">
+
+                <div class="submit-line"></div>
+
+                <button type="submit">
+                    <span>Submit Art</span>
+                    <b>→</b>
+                </button>
+
+                <div class="submit-line"></div>
+
+            </div>
+
+        </form>
+
+        <div class="card-footer">
+            <span>✦</span>
+            PRESERVE · CREATE · SHARE
+            <span>✦</span>
+        </div>
+
+    </main>
+
 </body>
 </html>

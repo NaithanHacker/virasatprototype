@@ -24,6 +24,7 @@ from dashboard import views as d_v
 from home import views as h_v
 from explore import views as e_v
 from sell import views as s_v
+from learn import views as l_v
 
 urlpatterns = [
     path('', i_f.info_view, name='info'),
@@ -37,8 +38,12 @@ urlpatterns = [
     path('artsell/', s_v.art_add,name='artsell'),
     path('sell/', s_v.sell,name='sell'),
 
+    path('course/', l_v.course, name="course"),
+    path('courseadd/', l_v.course_add, name="course_add "),
     path('admin/', admin.site.urls),
 ]
+
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
