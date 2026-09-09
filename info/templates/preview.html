@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virasat — Heritage, Held Onto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ink: #2B1810;
+  --maroon: #4A0E1A;
+  --maroon-soft: #6E260E;
+  --gold: #9C6B1F;
+  --gold-bright: #C8922F;
+  --parchment: #F3E9D4;
+  --parchment-dark: #EADDCA;
+  --ivory: #FBF7EE;
+  --cream: #F7F0E3;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Jost', 'Segoe UI', sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+html,body{
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  padding: 0;
+  height: 100%;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  background: var(--cream);
+}
+*{ box-sizing: border-box; }
+a{ text-decoration: none; color: var(--maroon); }
+a:focus-visible, button:focus-visible{ outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+
+/* Nav */
+#nav{
+  border-bottom: 1px solid var(--maroon-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--parchment-dark);
+  padding: 14px 32px;
+  position: relative;
+  z-index: 10;
+}
+.brand{ display: flex; align-items: center; gap: 12px; }
+.brand-mark{
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--maroon-soft) 70%);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+}
+.brand-word{
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--maroon);
+}
+.nav-links{ display: flex; gap: 36px; }
+.nav-link{
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav-link::after{
+  content: "";
+  position: absolute; left: 0; bottom: 0;
+  width: 0; height: 1.5px;
+  background: var(--gold-bright);
+  transition: width 0.28s ease;
+}
+.nav-link:hover::after{ width: 100%; }
+.nav-icons{ display: flex; align-items: center; gap: 18px; }
+.nav-icons a{ color: var(--maroon); display: flex; transition: color 0.2s ease, transform 0.2s ease; }
+.nav-icons a:hover{ color: var(--gold-bright); transform: translateY(-1px); }
+
+/* Hero */
+.con{
+  position: relative;
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  height: 560px;
+  overflow: hidden;
+}
+.bg-slider-wrapper {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+.bg-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  animation: bgScroll 32s linear infinite;
+}
+.bg-slider-wrapper:hover .bg-track{ animation-play-state: paused; }
+.bg-swatch{
+  height: 100%;
+  width: 220px;
+  flex: none;
+  filter: brightness(0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bg-swatch svg{ width: 60%; height: 60%; opacity: 0.5; }
+@keyframes bgScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.bg-veil{
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(20,10,6,0.88) 0%, rgba(20,10,6,0.4) 45%, rgba(20,10,6,0.18) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-copy{ position: relative; z-index: 2; padding: 0 56px 56px; max-width: 640px; color: var(--ivory); }
+.hero-in{ opacity: 0; transform: translateY(16px); animation: heroRise 0.7s ease forwards; }
+.hero-in-1{ animation-delay: 0.05s; }
+.hero-in-2{ animation-delay: 0.2s; }
+.hero-in-3{ animation-delay: 0.38s; }
+.hero-in-4{ animation-delay: 0.55s; }
+@keyframes heroRise{ to{ opacity: 1; transform: translateY(0); } }
+#p h2{ font-family: var(--font-ui); font-size: 15px; font-weight: 500; letter-spacing: 0.04em; color: var(--gold-bright); margin: 0 0 10px; }
+.pro h1{ font-family: var(--font-display); font-size: 46px; font-weight: 600; line-height: 1.15; margin: 0 0 16px; max-width: 15ch; }
+.desc p{ font-family: var(--font-ui); font-size: 16px; line-height: 1.6; color: rgba(251, 247, 238, 0.85); margin: 0 0 28px; max-width: 46ch; }
+#box{ width: fit-content; }
+#pp{
+  display: block; padding: 12px 30px;
+  border: 1.5px solid var(--ivory);
+  color: var(--ivory);
+  font-family: var(--font-ui);
+  font-size: 15px; font-weight: 500; letter-spacing: 0.02em;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+#pp:hover{ background: var(--ivory); color: var(--maroon); border-color: var(--ivory); }
+
+/* Feature strip */
+.contt{
+  border-top: 1px solid var(--maroon-soft);
+  padding: 56px 5vw;
+  display: flex; justify-content: center; gap: 28px;
+  background-color: var(--parchment-dark);
+  flex-wrap: wrap;
+}
+.feature-card{
+  height: 280px; width: 240px;
+  border: 1px solid var(--maroon-soft);
+  background-color: var(--ivory);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px; text-align: center; position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.feature-card::before, .feature-card::after{
+  content: ""; position: absolute; width: 14px; height: 14px;
+  border-top: 1.5px solid transparent; border-left: 1.5px solid transparent;
+  top: 8px; left: 8px; transition: border-color 0.25s ease;
+}
+.feature-card::after{
+  top: auto; left: auto; bottom: 8px; right: 8px;
+  border-top: none; border-left: none;
+  border-bottom: 1.5px solid transparent; border-right: 1.5px solid transparent;
+}
+.feature-card:hover{ transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 14px 26px -18px rgba(74, 14, 26, 0.45); }
+.feature-card:hover::before, .feature-card:hover::after{ border-color: var(--gold-bright); }
+.icon-wrap{ height: 130px; width: 130px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; }
+.icon-wrap svg{ width: 120px; height: 120px; }
+.icon-wrap path{ fill: none; stroke: var(--maroon-soft); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.25s ease; }
+.feature-card:hover .icon-wrap path{ stroke: var(--gold-bright); }
+.shield-text{ font-family: var(--font-display); font-size: 42px; fill: var(--maroon-soft); user-select: none; transition: fill 0.25s ease; }
+.feature-card:hover .shield-text{ fill: var(--gold-bright); }
+.feature-link{ display: block; font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--maroon); margin-top: 6px; }
+.feature-note{ font-family: var(--font-ui); font-size: 13.5px; color: rgba(43, 24, 16, 0.6); margin: 6px 0 0; line-height: 1.4; }
+
+/* Footer */
+#footer {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  background-color: var(--parchment);
+  color: var(--ink);
+  padding: 40px 6vw 28px;
+  border-top: 2px solid var(--gold);
+  flex-wrap: wrap; gap: 24px;
+}
+#footer h3{ font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--maroon); margin: 0 0 12px; }
+#footer p{ font-size: 14px; line-height: 1.7; margin: 0 0 4px; color: rgba(43, 24, 16, 0.75); }
+#contact, #help, #social { flex: 1; min-width: 180px; }
+#help ul{ padding: 0; margin: 0; }
+#help li { list-style: none; margin-bottom: 6px; }
+#help li a{ font-size: 14px; color: rgba(43, 24, 16, 0.75); transition: color 0.2s ease; }
+#help li a:hover{ color: var(--maroon); }
+#social a{ display: inline-flex; margin-right: 12px; transition: transform 0.2s ease; color: var(--maroon-soft); }
+#social a:hover{ transform: translateY(-2px); color: var(--gold-bright); }
+.copyright{ width: 100%; text-align: center; font-size: 12.5px; color: rgba(43, 24, 16, 0.55); margin-top: 12px; padding-top: 16px; border-top: 1px solid rgba(74, 14, 26, 0.15); }
+.reveal-footer { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
+.reveal-footer.active { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px){
+  .nav-links{ display: none; }
+  .con{ height: 480px; }
+  .pro h1{ font-size: 34px; }
+}
+@media (max-width: 600px){
+  #nav{ padding: 12px 18px; }
+  .hero-copy{ padding: 0 24px 36px; }
+  .contt{ padding: 40px 20px; gap: 20px; }
+  .feature-card{ width: 100%; max-width: 320px; height: 240px; }
+  #footer{ text-align: center; }
+}
+</style>
+</head>
+<body>
+    <div id="nn">
+        <nav id="nav">
+            <a class="brand" href="#">
+                <span class="brand-mark">V</span>
+                <span class="brand-word">Virasat</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#" class="nav-link">Explore</a>
+                <a href="#" class="nav-link">Support</a>
+                <a href="#" class="nav-link">Sell</a>
+                <a href="#" class="nav-link">Recognise</a>
+            </div>
+
+            <div class="nav-icons">
+                <a href="#" aria-label="Search">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </a>
+                <a href="/login/" aria-label="Account">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Your collection">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <line x1="7" y1="8" x2="17" y2="8"></line>
+                        <line x1="7" y1="12" x2="17" y2="12"></line>
+                        <line x1="7" y1="16" x2="13" y2="16"></line>
+                    </svg>
+                </a>
+            </div>
+        </nav>
+
+        <div class="con">
+            <div class="bg-slider-wrapper">
+                <div class="bg-track" id="bgTrack"></div>
+                <div class="bg-veil"></div>
+            </div>
+
+            <div class="hero-copy">
+                <div id="p" class="hero-in hero-in-1">
+                    <h2>This week's find</h2>
+                </div>
+                <div class="pro hero-in hero-in-2">
+                    <h1>A hand-loomed Banarasi shawl, three generations old</h1>
+                </div>
+                <div class="desc hero-in hero-in-3">
+                    <p>Traced to a weaving family in Varanasi, restored by hand and verified before it ever reached this page.</p>
+                </div>
+                <div id="box" class="hero-in hero-in-4">
+                    <a id="pp" href="#">See its story</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="contt">
+            <div class="feature-card" id="explore">
+                <div class="icon-wrap">
+                    <svg viewBox="0 0 100 100"><path d="M50 12 C 30 30, 30 55, 50 78 C 70 55, 70 30, 50 12 Z"/><path d="M50 20 L50 78"/><path d="M30 45 C 40 45, 60 45, 70 45"/></svg>
+                </div>
+                <a class="feature-link" href="#">Explore</a>
+                <p class="feature-note">Browse pieces by region, era and craft</p>
+            </div>
+
+            <div class="feature-card" id="shop">
+                <div class="icon-wrap">
+                    <svg viewBox="0 0 100 80"><path d="M 37 32 C 37 10, 63 10, 63 32" /><path d="M 30 32 L 70 32 L 88 70 L 12 70 Z" /></svg>
+                </div>
+                <a class="feature-link" href="#">Shop</a>
+                <p class="feature-note">Bring a verified heirloom home</p>
+            </div>
+
+            <div class="feature-card" id="learn">
+                <div class="icon-wrap">
+                    <svg viewBox="0 0 100 80">
+                        <path d="M 50 18 L 50 72" />
+                        <path d="M 50 18 C 34 8, 18 10, 8 13 L 12 70 C 22 66, 36 65, 50 72" />
+                        <path d="M 50 18 C 66 8, 82 10, 92 13 L 88 70 C 78 66, 64 65, 50 72" />
+                    </svg>
+                </div>
+                <a class="feature-link" href="#">Learn</a>
+                <p class="feature-note">The histories behind each object</p>
+            </div>
+
+            <div class="feature-card" id="recognise">
+                <div class="icon-wrap">
+                    <svg viewBox="0 0 100 110">
+                        <path d="M 12 10 L 40 27 Q 50 18 60 27 L 88 6 L 86 80 L 50 102 L 14 82 Z" />
+                        <text x="50%" y="58%" class="shield-text" dominant-baseline="middle" text-anchor="middle">S</text>
+                    </svg>
+                </div>
+                <a class="feature-link" href="#">Recognise</a>
+                <p class="feature-note">Get a family piece authenticated</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="reveal-footer">
+        <div id="footer">
+            <div id="contact">
+                <h3>Contact Us</h3>
+                <p>Email: virasatupcoming@gmail.com</p>
+                <p>Phone: +91 1234567890</p>
+            </div>
+            <div id="help">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div id="social">
+                <h3>Follow Us</h3>
+                <a href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg></a>
+                <a href="#" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.9c-.7.3-1.5.6-2.3.7.8-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.6 1a4.1 4.1 0 0 0-7 3.7A11.6 11.6 0 0 1 3.4 4.6a4 4 0 0 0 1.3 5.5c-.6 0-1.3-.2-1.8-.5v.1c0 2 1.4 3.6 3.3 4a4.2 4.2 0 0 1-1.8.1 4.1 4.1 0 0 0 3.9 2.9A8.3 8.3 0 0 1 2 18.6a11.6 11.6 0 0 0 6.3 1.8c7.5 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2.1"/></svg></a>
+                <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+            </div>
+            <p class="copyright">&copy; 2026 Virasat. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Placeholder marquee: repeats a set of tinted panels since real photos aren't
+        // available in this preview — swap for the real <img> tags in your Django template.
+        const colors = ["#6E260E","#9C6B1F","#4A0E1A","#8a5a2a","#5a1220","#7a4a1a"];
+        const track = document.getElementById('bgTrack');
+        const glyphs = [
+          '<path d="M50 12 C 30 30, 30 55, 50 78 C 70 55, 70 30, 50 12 Z"/>',
+          '<circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="14"/>',
+          '<path d="M20 50 L50 20 L80 50 L50 80 Z"/>',
+          '<path d="M50 15 L61 40 L88 40 L66 57 L74 83 L50 67 L26 83 L34 57 L12 40 L39 40 Z"/>'
+        ];
+        let html = "";
+        for (let i = 0; i < 20; i++) {
+          const c = colors[i % colors.length];
+          const g = glyphs[i % glyphs.length];
+          html += `<div class="bg-swatch" style="background:${c}"><svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="2">${g}</svg></div>`;
+        }
+        track.innerHTML = html;
+
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        const footerEl = document.querySelector('.reveal-footer');
+        if (footerEl) footerObserver.observe(footerEl);
+    </script>
+</body>
+</html>
