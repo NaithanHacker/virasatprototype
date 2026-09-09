@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sell</title>
+    <title>Document</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/art_list.css' %}">
 </head>
 <body>
-    <div>
-        <h2>All the Items are listed below.</h2>
-        {% for item in items %}
-            <div>
+    <div class="virasat-container">
+    <h2 class="virasat-heading">All the Items are listed below.</h2>
+    {% for item in items %}
+        <div class="art-card">
                 <p>{{ item.name_of_art }}</p>
                 <p>{{ item.name_of_artist }}</p>
                 <p>{{ item.price_of_art }}</p>
@@ -24,7 +27,7 @@
             <p>No art added yet.</p>
         {% endfor %}
 
-        <a href="/artsell/">+Add Item To sell</a>
+        <a href="/artsell/" class="add-art-btn">+ Add Art</a>
 
     </div>
 </body>
