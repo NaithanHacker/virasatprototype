@@ -1,23 +1,572 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create a Course — Atelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page:#FBF8F1;
+    --ink:#6D1B3A;
+    --ink-dim:#8B6270;
+    --ink-faint:#B99AA4;
+    --gold:#B8862F;
+    --gold-soft:#EFDFB8;
+    --line:#ECE1CD;
+    --card:#FFFFFF;
+    --success:#4C7A5E;
+  }
 
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="text" name="course_name" placeholder="Enter the name">
-            <textarea name='course_desc' placeholder="Enter The description"></textarea>
-            <input type="text" name="course_tutor_name" placeholder="Enter the tutor's Name">
-            <input type="number" name="course_price" placeholder="Enter the Price of the Course">
-            <input type="file" name="course_video" placeholder="Enter the course Video">
-            <button type="submit">Submit</button>
-        </form>
-    </body>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+
+  body{
+    background:var(--page);
+    font-family:'IBM Plex Sans', -apple-system, sans-serif;
+    color:var(--ink);
+  }
+
+  /* ---------- top nav ---------- */
+  .topnav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 32px;
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+
+  .topnav__logo{
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:22px;
+    color:var(--ink);
+  }
+
+  .topnav__links{
+    display:flex;
+    gap:28px;
+    font-size:14px;
+    color:var(--ink-dim);
+  }
+
+  .topnav__links a{
+    color:var(--ink-dim);
+    text-decoration:none;
+  }
+  .topnav__links a.is-active{
+    color:var(--ink);
+    font-weight:600;
+  }
+
+  .topnav__right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+
+  .avatar{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:var(--gold-soft);
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    font-weight:600;
+  }
+
+  /* ---------- page header + stepper ---------- */
+  .page-head{
+    max-width:1080px;
+    margin:36px auto 0;
+    padding:0 32px;
+  }
+
+  .page-head__eyebrow{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin:0 0 6px;
+  }
+
+  .page-head__title{
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:32px;
+    margin:0 0 26px;
+  }
+
+  .stepper{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+  }
+
+  .step{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:13.5px;
+    color:var(--ink-faint);
+  }
+
+  .step__dot{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:1.5px solid var(--ink-faint);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11.5px;
+  }
+
+  .step.is-done .step__dot{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:#fff;
+  }
+  .step.is-done{ color:var(--ink-dim); }
+
+  .step.is-active .step__dot{
+    border-color:var(--ink);
+    color:var(--ink);
+    font-weight:600;
+  }
+  .step.is-active{ color:var(--ink); font-weight:600; }
+
+  .step__rule{
+    width:36px;
+    height:1px;
+    background:var(--line);
+  }
+
+  /* ---------- layout ---------- */
+  .layout{
+    max-width:1080px;
+    margin:24px auto 80px;
+    padding:0 32px;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:28px;
+    align-items:start;
+  }
+
+  @media (max-width:880px){
+    .layout{ grid-template-columns:1fr; }
+    .topnav__links{ display:none; }
+  }
+
+  /* ---------- form card ---------- */
+  .form-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:36px 34px 30px;
+  }
+
+  .form-card__title{
+    font-size:16px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+
+  .form-card__sub{
+    font-size:13.5px;
+    color:var(--ink-dim);
+    margin:0 0 26px;
+  }
+
+  .field{
+    padding:16px 0 12px;
+    border-bottom:1px solid var(--line);
+  }
+  .field:first-of-type{ padding-top:0; }
+
+  .field label{
+    display:block;
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-bottom:7px;
+  }
+
+  .field input[type="text"],
+  .field input[type="number"],
+  .field textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:15.5px;
+    padding:2px 0;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder{
+    color:var(--ink-faint);
+  }
+
+  .field textarea{
+    resize:vertical;
+    min-height:64px;
+    line-height:1.5;
+  }
+
+  .price-row{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .price-row .currency{ color:var(--ink-dim); }
+
+  .dropzone{
+    border:1.5px dashed var(--line);
+    padding:20px 16px;
+    text-align:center;
+    cursor:pointer;
+    position:relative;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .dropzone:hover, .dropzone.is-focused{
+    border-color:var(--ink);
+    background:rgba(109,27,58,0.03);
+  }
+  .dropzone input[type="file"]{
+    position:absolute; inset:0; opacity:0; cursor:pointer;
+  }
+  .dropzone__label{ font-size:13.5px; color:var(--ink); }
+  .dropzone__hint{ font-size:12px; color:var(--ink-dim); margin-top:3px; }
+
+  .form-card__footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:26px;
+  }
+
+  .link-btn{
+    background:none;
+    border:none;
+    color:var(--ink-dim);
+    font-size:14px;
+    cursor:pointer;
+    padding:0;
+    font-family:inherit;
+  }
+  .link-btn:hover{ color:var(--ink); }
+
+  button.submit{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    background:var(--ink);
+    color:#FBF6EE;
+    border:none;
+    padding:12px 26px;
+    cursor:pointer;
+    transition:transform 0.12s ease, box-shadow 0.12s ease;
+    box-shadow:3px 3px 0 rgba(184,134,47,0.4);
+  }
+  button.submit:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:5px 5px 0 rgba(184,134,47,0.4);
+  }
+  button.submit:active{
+    transform:translate(0,0);
+    box-shadow:1px 1px 0 rgba(184,134,47,0.4);
+  }
+
+  input:focus, textarea:focus{ color:var(--gold); }
+
+  /* ---------- live preview ---------- */
+  .preview-wrap{ position:sticky; top:88px; }
+
+  .preview-label{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-bottom:10px;
+  }
+
+  .preview-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    overflow:hidden;
+    box-shadow:0 20px 40px -24px rgba(109,27,58,0.25);
+  }
+
+  .preview-thumb{
+    position:relative;
+    aspect-ratio:16/10;
+    background:linear-gradient(120deg, #F3E3C7, #F8ECD8, #F3E3C7);
+    background-size:220% 220%;
+    animation:shimmer 5s ease-in-out infinite;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .preview-thumb.has-file{
+    animation:none;
+    background:linear-gradient(135deg, #6D1B3A, #8B2C4C);
+  }
+
+  .preview-play{
+    width:46px; height:46px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.85);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--ink);
+    font-size:16px;
+    transition:transform 0.15s ease;
+  }
+
+  .preview-badge{
+    position:absolute;
+    top:12px; left:12px;
+    background:var(--gold);
+    color:#3A2A0C;
+    font-size:11px;
+    font-weight:600;
+    padding:4px 9px;
+  }
+
+  .preview-file-tag{
+    position:absolute;
+    bottom:10px; left:10px;
+    background:rgba(255,255,255,0.92);
+    color:var(--ink);
+    font-size:11.5px;
+    padding:4px 9px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+
+  .preview-body{
+    padding:20px 20px 22px;
+  }
+
+  .preview-title{
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:21px;
+    margin:0 0 6px;
+    transition:color 0.25s ease;
+  }
+
+  .preview-tutor{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin:0 0 12px;
+  }
+
+  .preview-desc{
+    font-size:13.5px;
+    color:var(--ink-dim);
+    line-height:1.5;
+    margin:0 0 16px;
+    min-height:20px;
+  }
+
+  .preview-meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+
+  .preview-stars{ color:var(--gold); font-size:13px; letter-spacing:1px; }
+  .preview-stars span{ color:var(--ink-faint); font-size:12px; margin-left:5px; }
+
+  .preview-price{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:600;
+    font-size:19px;
+  }
+
+  .flash{
+    animation:flash 0.5s ease-out;
+  }
+
+  @keyframes flash{
+    0%{ color:var(--gold); }
+    100%{ color:var(--ink); }
+  }
+
+  @keyframes shimmer{
+    0%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+    100%{ background-position:0% 50%; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .preview-thumb{ animation:none; }
+    .flash{ animation:none; }
+    button.submit{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="topnav">
+    <div class="topnav__logo">Atelier</div>
+    <nav class="topnav__links">
+      <a href="#">Dashboard</a>
+      <a href="#" class="is-active">Courses</a>
+      <a href="#">Earnings</a>
+      <a href="#">Help</a>
+    </nav>
+    <div class="topnav__right">
+      <div class="avatar">MR</div>
+    </div>
+  </header>
+
+  <div class="page-head">
+    <p class="page-head__eyebrow">Instructor studio</p>
+    <h1 class="page-head__title">Create a new course</h1>
+
+    <div class="stepper">
+      <div class="step is-done"><span class="step__dot">✓</span>Basics</div>
+      <div class="step__rule"></div>
+      <div class="step is-active"><span class="step__dot">2</span>Details</div>
+      <div class="step__rule"></div>
+      <div class="step"><span class="step__dot">3</span>Publish</div>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <form class="form-card" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <p class="form-card__title">Course details</p>
+      <p class="form-card__sub">This information appears on your course page — the preview updates as you type.</p>
+
+      <div class="field">
+        <label for="course_name">Course name</label>
+        <input type="text" id="course_name" name="course_name" placeholder="e.g. Intro to Watercolor Painting">
+      </div>
+
+      <div class="field">
+        <label for="course_desc">Description</label>
+        <textarea id="course_desc" name="course_desc" placeholder="What will students learn?"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="course_tutor_name">Tutor name</label>
+        <input type="text" id="course_tutor_name" name="course_tutor_name" placeholder="Who's teaching this course?">
+      </div>
+
+      <div class="field">
+        <label for="course_price">Price</label>
+        <div class="price-row">
+          <span class="currency">$</span>
+          <input type="number" id="course_price" name="course_price" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Course video</label>
+        <div class="dropzone" id="dropzone">
+          <div class="dropzone__label" id="dropzoneLabel">Click to upload, or drop a file here</div>
+          <div class="dropzone__hint">MP4, MOV, or WEBM</div>
+          <input type="file" name="course_video" id="course_video" accept="video/*">
+        </div>
+      </div>
+
+      <div class="form-card__footer">
+        <button type="button" class="link-btn">Save as draft</button>
+        <button type="submit" class="submit">Continue to publish</button>
+      </div>
+    </form>
+
+    <div class="preview-wrap">
+      <p class="preview-label">How students will see it</p>
+      <div class="preview-card">
+        <div class="preview-thumb" id="previewThumb">
+          <div class="preview-badge">New</div>
+          <div class="preview-play">▶</div>
+        </div>
+        <div class="preview-body">
+          <h3 class="preview-title" id="previewTitle">Your course title</h3>
+          <p class="preview-tutor" id="previewTutor">Taught by you</p>
+          <p class="preview-desc" id="previewDesc">A short, clear description helps students know what to expect.</p>
+          <div class="preview-meta">
+            <div class="preview-stars">★★★★★<span>(0)</span></div>
+            <div class="preview-price" id="previewPrice">$0.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function flashUpdate(el){
+      el.classList.remove('flash');
+      void el.offsetWidth;
+      el.classList.add('flash');
+    }
+
+    const nameInput = document.getElementById('course_name');
+    const descInput = document.getElementById('course_desc');
+    const tutorInput = document.getElementById('course_tutor_name');
+    const priceInput = document.getElementById('course_price');
+    const fileInput = document.getElementById('course_video');
+
+    const previewTitle = document.getElementById('previewTitle');
+    const previewDesc = document.getElementById('previewDesc');
+    const previewTutor = document.getElementById('previewTutor');
+    const previewPrice = document.getElementById('previewPrice');
+    const previewThumb = document.getElementById('previewThumb');
+    const dropzoneLabel = document.getElementById('dropzoneLabel');
+    const dropzone = document.getElementById('dropzone');
+
+    nameInput.addEventListener('input', () => {
+      previewTitle.textContent = nameInput.value.trim() || 'Your course title';
+      flashUpdate(previewTitle);
+    });
+
+    descInput.addEventListener('input', () => {
+      previewDesc.textContent = descInput.value.trim() || 'A short, clear description helps students know what to expect.';
+    });
+
+    tutorInput.addEventListener('input', () => {
+      previewTutor.textContent = tutorInput.value.trim() ? 'Taught by ' + tutorInput.value.trim() : 'Taught by you';
+    });
+
+    priceInput.addEventListener('input', () => {
+      const val = parseFloat(priceInput.value);
+      previewPrice.textContent = '$' + (isNaN(val) ? '0.00' : val.toFixed(2));
+      flashUpdate(previewPrice);
+    });
+
+    fileInput.addEventListener('change', () => {
+      if(fileInput.files && fileInput.files[0]){
+        dropzoneLabel.textContent = fileInput.files[0].name;
+        previewThumb.classList.add('has-file');
+        previewThumb.insertAdjacentHTML('beforeend',
+          '<div class="preview-file-tag">✓ Video attached</div>');
+      }
+    });
+
+    fileInput.addEventListener('focus', () => dropzone.classList.add('is-focused'));
+    fileInput.addEventListener('blur', () => dropzone.classList.remove('is-focused'));
+  </script>
+
+</body>
 </html>
