@@ -496,7 +496,7 @@ button:focus-visible {
                 <p>Name is: {{ course.course_name }}</P>
                 <p>Tutor Name is: {{ course.course_tutor_name }}</P>
                 <p>Description is: {{ course.course_desc }}</P>
-                <p>Price is: {{ course.course.price }}</P>
+                <p>Price is: {{ course.course_price }}</P>
                 {% if course.course_video %}
                     <video width="320" height="240" controls>
                         <source src="{{ course.course_video }}" type="video/mp4">
