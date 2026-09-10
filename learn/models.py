@@ -6,7 +6,7 @@ class Course(models.Model):
     course_name = models.CharField(max_length=150, null=True)
     course_desc = models.TextField()
     course_tutor_name = models.CharField(max_length=150, null=True)
-    course_price = models.IntegerField(max_length=10)
+    course_price = models.IntegerField()
     course_video = models.FileField(
         upload_to='videos_uploaded/', 
         null=True, 
