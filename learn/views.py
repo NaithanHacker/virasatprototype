@@ -23,7 +23,7 @@ def course_add(request):
 
 def course(request):
     courses = Course.objects.all()
-    
+    user = User.username
     return render(request, "course.html", context = {"courses":courses,
-        "user":request.user,
+        "user":user,
     })
