@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-%quk52%jp3(&w9kaz#0!=@u#lm$3x+)y9rk^!ep2k2ogi$-4-l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://virasatprototype-1.onrender.com/",
-                 "https://virasatprototype-2.onrender.com/"]
+ALLOWED_HOSTS = ["https://virasatprototype-2.onrender.com/"]
 
 
 # Application definition
