@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from learn.models import Course
+from accounts.models import User
 # Create your views here.
 
 def course_add(request):
@@ -22,4 +23,7 @@ def course_add(request):
 
 def course(request):
     courses = Course.objects.all()
-    return render(request, "course.html", context = {"courses":courses})
+    
+    return render(request, "course.html", context = {"courses":courses,
+        "user":request.user,
+    })
